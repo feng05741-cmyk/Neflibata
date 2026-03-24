@@ -1,701 +1,606 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>漫游花园 · Logs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=SF+Pro+Display:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=Lato:wght@300;400&display=swap');
+  :root {
+    --theme: #9B8EC4;
+    --theme-light: #C5B8E8;
+    --theme-bg: #EDE8F5;
+    --theme-soft: #F5F2FB;
+    --theme-text: #5a4f7a;
+    --bubble-ai: #F0EBF9;
+    --bubble-user: var(--theme);
+    --bubble-ai-text: #3d3450;
+    --bubble-user-text: #fff;
+    --header-bg: linear-gradient(135deg, #9B8EC4 0%, #b8a8d8 100%);
+    --font-size: 15px;
+    --font-family: 'Noto Serif SC', serif;
+    --chat-bg: var(--theme-soft);
+    --card-bg: #fff;
+    --border: rgba(155,142,196,0.15);
+    --shadow: 0 2px 16px rgba(155,142,196,0.12);
+  }
+  [data-theme="pink"] {
+    --theme:#E8A4A4;--theme-light:#F0C5C5;--theme-bg:#FAF0F0;--theme-soft:#FDF7F7;
+    --theme-text:#7a4f4f;--bubble-ai:#FDF0F0;--bubble-user:#E8A4A4;--bubble-ai-text:#5a3333;
+    --header-bg:linear-gradient(135deg,#E8A4A4 0%,#f0c0c0 100%);--border:rgba(232,164,164,0.15);
+    --shadow:0 2px 16px rgba(232,164,164,0.12);
+  }
+  [data-theme="sand"] {
+    --theme:#C4A882;--theme-light:#D9C4A0;--theme-bg:#F5EFE6;--theme-soft:#FAF7F2;
+    --theme-text:#6b5533;--bubble-ai:#F9F3EA;--bubble-user:#C4A882;--bubble-ai-text:#4a3820;
+    --header-bg:linear-gradient(135deg,#C4A882 0%,#d9c4a0 100%);--border:rgba(196,168,130,0.15);
+    --shadow:0 2px 16px rgba(196,168,130,0.12);
+  }
+  [data-theme="blue"] {
+    --theme:#7FA8D4;--theme-light:#A8C5E8;--theme-bg:#EBF3FB;--theme-soft:#F3F8FD;
+    --theme-text:#2f5072;--bubble-ai:#EBF3FB;--bubble-user:#7FA8D4;--bubble-ai-text:#1e3d5c;
+    --header-bg:linear-gradient(135deg,#7FA8D4 0%,#a8c5e8 100%);--border:rgba(127,168,212,0.15);
+    --shadow:0 2px 16px rgba(127,168,212,0.12);
+  }
+  [data-theme="green"] {
+    --theme:#82B885;--theme-light:#A8CFA8;--theme-bg:#EBF5EB;--theme-soft:#F3FAF3;
+    --theme-text:#2d5c30;--bubble-ai:#EBF5EB;--bubble-user:#82B885;--bubble-ai-text:#1a3d1c;
+    --header-bg:linear-gradient(135deg,#82B885 0%,#a8cfa8 100%);--border:rgba(130,184,133,0.15);
+    --shadow:0 2px 16px rgba(130,184,133,0.12);
+  }
+  [data-theme="dark"] {
+    --theme:#8080b0;--theme-light:#6a6a8a;--theme-bg:#1e1e2e;--theme-soft:#252535;
+    --theme-text:#c8c5d8;--bubble-ai:#2a2a3e;--bubble-user:#5a5a8a;--bubble-ai-text:#c8c5d8;
+    --bubble-user-text:#e8e5f5;--header-bg:linear-gradient(135deg,#3a3a5a 0%,#4a4a6a 100%);
+    --card-bg:#252535;--border:rgba(128,128,176,0.2);--shadow:0 2px 16px rgba(0,0,0,0.3);
+  }
 
-:root {
-–theme: #9B8EC4;
-–theme-light: #C5B8E8;
-–theme-bg: #EDE8F5;
-–theme-soft: #F5F2FB;
-–theme-text: #5a4f7a;
-–bubble-ai: #F0EBF9;
-–bubble-user: var(–theme);
-–bubble-ai-text: #3d3450;
-–bubble-user-text: #fff;
-–header-bg: linear-gradient(135deg, #9B8EC4 0%, #b8a8d8 100%);
-–font-size: 15px;
-–font-family: ‘Noto Serif SC’, serif;
-}
-[data-theme=“pink”] { –theme:#E8A4A4;–theme-light:#F0C5C5;–theme-bg:#FAF0F0;–theme-soft:#FDF7F7;–theme-text:#7a4f4f;–bubble-ai:#FDF0F0;–bubble-user:#E8A4A4;–bubble-ai-text:#5a3333;–header-bg:linear-gradient(135deg,#E8A4A4 0%,#f0c0c0 100%); }
-[data-theme=“sand”] { –theme:#C4A882;–theme-light:#D9C4A0;–theme-bg:#F5EFE6;–theme-soft:#FAF7F2;–theme-text:#6b5533;–bubble-ai:#F9F3EA;–bubble-user:#C4A882;–bubble-ai-text:#4a3820;–header-bg:linear-gradient(135deg,#C4A882 0%,#d9c4a0 100%); }
-[data-theme=“blue”] { –theme:#7FA8D4;–theme-light:#A8C5E8;–theme-bg:#EBF3FB;–theme-soft:#F3F8FD;–theme-text:#2f5072;–bubble-ai:#EBF3FB;–bubble-user:#7FA8D4;–bubble-ai-text:#1e3d5c;–header-bg:linear-gradient(135deg,#7FA8D4 0%,#a8c5e8 100%); }
-[data-theme=“green”] { –theme:#82B885;–theme-light:#A8CFA8;–theme-bg:#EBF5EB;–theme-soft:#F3FAF3;–theme-text:#2d5c30;–bubble-ai:#EBF5EB;–bubble-user:#82B885;–bubble-ai-text:#1a3d1c;–header-bg:linear-gradient(135deg,#82B885 0%,#a8cfa8 100%); }
-[data-theme=“dark”] { –theme:#4a4a6a;–theme-light:#6a6a8a;–theme-bg:#1e1e2e;–theme-soft:#252535;–theme-text:#c8c5d8;–bubble-ai:#2a2a3e;–bubble-user:#4a4a6a;–bubble-ai-text:#c8c5d8;–bubble-user-text:#e8e5f5;–header-bg:linear-gradient(135deg,#3a3a5a 0%,#4a4a6a 100%); }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  
+  body {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    background: var(--theme-bg);
+    color: var(--theme-text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
+    -webkit-font-smoothing: antialiased;
+  }
 
-- { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  /* ===== SCREENS ===== */
+  .screen { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
+  .screen.active { display: flex; }
 
-body {
-font-family: var(–font-family);
-font-size: var(–font-size);
-background: var(–theme-bg);
-color: var(–theme-text);
-min-height: 100vh;
-overflow-x: hidden;
-transition: background 0.4s, color 0.4s;
-}
+  /* ===== SF-style HEADER ===== */
+  .header {
+    background: var(--header-bg);
+    color: white;
+    padding: env(safe-area-inset-top, 14px) 16px 14px;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 14px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+  .header-title {
+    flex: 1;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    font-family: -apple-system, 'SF Pro Display', sans-serif;
+  }
+  .header-btn {
+    background: rgba(255,255,255,0.22);
+    border: none;
+    color: white;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.15s;
+    flex-shrink: 0;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  .header-btn:active { background: rgba(255,255,255,0.38); }
+  .header-btn svg { width: 18px; height: 18px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* ===== SCREENS ===== */
-.screen { display: none; flex-direction: column; height: 100vh; overflow: hidden; }
-.screen.active { display: flex; }
+  /* ===== HOME ===== */
+  #home { background: var(--theme-bg); }
+  
+  .home-header {
+    background: var(--header-bg);
+    color: white;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .home-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .home-header-btns { display: flex; gap: 8px; }
+  .garden-title {
+    text-align: center;
+    font-size: 22px;
+    font-family: -apple-system, 'SF Pro Display', sans-serif;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+  }
+  .garden-subtitle {
+    text-align: center;
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 3px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
 
-/* ===== HEADER ===== */
-.header {
-background: var(–header-bg);
-color: white;
-padding: 14px 16px 14px;
-display: flex;
-align-items: center;
-gap: 10px;
-flex-shrink: 0;
-box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-position: relative;
-z-index: 10;
-}
-.header-title {
-flex: 1;
-text-align: center;
-font-size: 16px;
-font-weight: 500;
-letter-spacing: 1px;
-font-family: ‘Lato’, sans-serif;
-}
-.header-btn {
-background: rgba(255,255,255,0.2);
-border: none;
-color: white;
-width: 34px;
-height: 34px;
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-font-size: 18px;
-transition: background 0.2s;
-flex-shrink: 0;
-}
-.header-btn:active { background: rgba(255,255,255,0.35); }
+  .home-body { flex: 1; overflow-y: auto; padding: 16px; }
 
-/* ===== HOME SCREEN ===== */
-#home { background: var(–theme-bg); }
+  /* Cards */
+  .card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  
+  .stats-card { line-height: 1.9; font-size: 14px; color: var(--theme-text); }
+  .stats-card .highlight { color: var(--theme); font-weight: 600; }
+  
+  .stats-row { display: flex; gap: 10px; margin-bottom: 14px; }
+  .stat-box {
+    flex: 1;
+    background: var(--card-bg);
+    border-radius: 18px;
+    padding: 14px 8px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .stat-box-val { font-size: 22px; color: var(--theme); font-weight: 600; font-family: -apple-system, sans-serif; }
+  .stat-box-label { font-size: 11px; opacity: 0.5; margin-top: 2px; }
 
-.home-header {
-background: var(–header-bg);
-color: white;
-padding: 20px 16px 16px;
-flex-shrink: 0;
-}
-.home-header-top {
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 12px;
-}
-.home-header-btns { display: flex; gap: 8px; }
-.garden-title {
-text-align: center;
-font-size: 22px;
-font-family: ‘Lato’, sans-serif;
-letter-spacing: 2px;
-font-weight: 300;
-}
-.garden-subtitle {
-text-align: center;
-font-size: 12px;
-opacity: 0.8;
-margin-top: 3px;
-letter-spacing: 3px;
-}
+  .person-cards { display: flex; gap: 10px; margin-bottom: 14px; }
+  .person-card { flex: 1; background: var(--card-bg); border-radius: 18px; padding: 14px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .person-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .person-avatar {
+    width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
+    border: 2px solid var(--theme-light); background: var(--theme-bg);
+    font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    overflow: hidden;
+  }
+  .person-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .person-name { font-size: 13px; font-weight: 600; color: var(--theme); }
+  .person-stat { font-size: 12px; color: var(--theme-text); display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--theme-bg); opacity: 0.8; }
+  .person-stat:last-child { border-bottom: none; }
+  .person-stat span:last-child { color: var(--theme); font-weight: 600; opacity: 1; }
 
-.home-body { flex: 1; overflow-y: auto; padding: 16px; }
+  /* ===== CALENDAR ===== */
+  .calendar-card { background: var(--card-bg); border-radius: 20px; padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .calendar-month-label { font-size: 15px; font-weight: 600; color: var(--theme); font-family: -apple-system, sans-serif; }
+  .calendar-nav { display: flex; gap: 6px; }
+  .cal-nav-btn {
+    width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--theme-light);
+    background: none; color: var(--theme); cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .cal-nav-btn:active { background: var(--theme-bg); }
+  .cal-weekdays { display: grid; grid-template-columns: repeat(7,1fr); text-align: center; margin-bottom: 6px; }
+  .cal-weekday { font-size: 11px; opacity: 0.4; padding: 2px 0; font-family: -apple-system, sans-serif; }
+  .cal-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+  .cal-day {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; border-radius: 50%; cursor: default;
+    font-family: -apple-system, sans-serif; position: relative; transition: all 0.15s;
+  }
+  .cal-day.empty { }
+  .cal-day.has-chat {
+    background: var(--theme);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .cal-day.has-chat:active { transform: scale(0.9); opacity: 0.85; }
+  .cal-day.today { border: 2px solid var(--theme); color: var(--theme); font-weight: 600; }
+  .cal-day.today.has-chat { border-color: rgba(255,255,255,0.5); color: white; }
+  .cal-day.light-chat {
+    background: var(--theme-light);
+    color: var(--theme-text);
+    opacity: 0.7;
+    cursor: pointer;
+  }
 
-/* Stats card */
-.stats-card {
-background: white;
-border-radius: 18px;
-padding: 18px;
-margin-bottom: 16px;
-box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-line-height: 1.9;
-font-size: 14px;
-color: var(–theme-text);
-}
-.stats-card .highlight { color: var(–theme); font-weight: 500; }
+  /* Quick buttons */
+  .quick-btns { display: flex; gap: 10px; margin-bottom: 14px; }
+  .quick-btn {
+    flex: 1; background: var(--card-bg); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 12px 8px; text-align: center;
+    font-size: 12px; color: var(--theme); cursor: pointer; transition: all 0.15s;
+    font-family: var(--font-family); box-shadow: var(--shadow);
+  }
+  .quick-btn:active { background: var(--theme-bg); transform: scale(0.97); }
+  .quick-btn .qb-icon { font-size: 22px; display: block; margin-bottom: 5px; }
 
-.stats-row {
-display: flex;
-gap: 12px;
-margin-bottom: 16px;
-}
-.stat-box {
-flex: 1;
-background: white;
-border-radius: 16px;
-padding: 14px 10px;
-text-align: center;
-box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-}
-.stat-box-val { font-size: 20px; color: var(–theme); font-weight: 500; }
-.stat-box-label { font-size: 11px; opacity: 0.6; margin-top: 3px; }
+  .upload-area {
+    background: var(--card-bg); border: 2px dashed var(--theme-light);
+    border-radius: 20px; padding: 32px; text-align: center;
+    cursor: pointer; color: var(--theme); transition: all 0.2s; margin-bottom: 14px;
+  }
+  .upload-area:active { background: var(--theme-bg); }
+  .upload-area .upload-icon { font-size: 40px; display: block; margin-bottom: 10px; }
+  .upload-area p { font-size: 13px; opacity: 0.7; }
 
-/* Person cards */
-.person-cards {
-display: flex;
-gap: 12px;
-margin-bottom: 16px;
-}
-.person-card {
-flex: 1;
-background: white;
-border-radius: 16px;
-padding: 14px;
-box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-}
-.person-card-header {
-display: flex;
-align-items: center;
-gap: 8px;
-margin-bottom: 10px;
-}
-.person-avatar {
-width: 38px;
-height: 38px;
-border-radius: 50%;
-object-fit: cover;
-border: 2px solid var(–theme-light);
-background: var(–theme-bg);
-font-size: 18px;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-shrink: 0;
-}
-.person-name { font-size: 13px; font-weight: 500; color: var(–theme); }
-.person-stat { font-size: 12px; color: #aaa; display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(–theme-bg); }
-.person-stat:last-child { border-bottom: none; }
-.person-stat span:last-child { color: var(–theme); font-weight: 500; }
+  /* ===== CONVERSATIONS LIST ===== */
+  #conversations .body { flex: 1; overflow-y: auto; padding: 10px 12px; }
+  
+  .filter-tabs { display: flex; gap: 6px; padding: 10px 12px 0; flex-shrink: 0; overflow-x: auto; scrollbar-width: none; }
+  .filter-tabs::-webkit-scrollbar { display: none; }
+  .filter-tab {
+    padding: 5px 14px; border-radius: 20px; font-size: 13px;
+    border: 1.5px solid var(--theme-light); background: var(--card-bg);
+    color: var(--theme); cursor: pointer; transition: all 0.15s;
+    font-family: -apple-system, sans-serif; white-space: nowrap; flex-shrink: 0;
+  }
+  .filter-tab.active { background: var(--theme); color: white; border-color: var(--theme); }
 
-/* Quick actions */
-.quick-btns { display: flex; gap: 10px; margin-bottom: 16px; }
-.quick-btn {
-flex: 1;
-background: white;
-border: 1.5px solid var(–theme-light);
-border-radius: 14px;
-padding: 10px 8px;
-text-align: center;
-font-size: 12px;
-color: var(–theme);
-cursor: pointer;
-transition: all 0.2s;
-font-family: var(–font-family);
-}
-.quick-btn:active { background: var(–theme-bg); }
-.quick-btn .qb-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+  .search-box {
+    margin: 10px 12px; background: var(--card-bg); border-radius: 14px;
+    display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+    box-shadow: var(--shadow); border: 1px solid var(--border); flex-shrink: 0;
+  }
+  .search-box input {
+    flex: 1; border: none; outline: none; font-size: 14px;
+    background: transparent; color: var(--theme-text); font-family: var(--font-family);
+  }
+  .search-box input::placeholder { opacity: 0.35; }
+  .search-clear { color: var(--theme); opacity: 0.5; cursor: pointer; font-size: 18px; line-height: 1; display: none; }
+  .search-clear.visible { display: block; }
+  
+  .conv-count { font-size: 12px; opacity: 0.45; padding: 4px 12px 2px; flex-shrink: 0; font-family: -apple-system, sans-serif; }
 
-/* Section header */
-.section-title {
-font-size: 13px;
-color: var(–theme);
-font-weight: 500;
-letter-spacing: 1px;
-margin-bottom: 10px;
-padding-left: 4px;
-opacity: 0.8;
-}
+  .conv-item {
+    background: var(--card-bg); border-radius: 16px; padding: 13px 14px;
+    margin-bottom: 8px; box-shadow: var(--shadow); cursor: pointer;
+    transition: all 0.15s; display: flex; align-items: center; gap: 12px;
+    border: 1px solid var(--border);
+  }
+  .conv-item:active { transform: scale(0.98); opacity: 0.85; }
+  .conv-num {
+    font-size: 11px; color: var(--theme); opacity: 0.6; flex-shrink: 0;
+    font-family: -apple-system, sans-serif; font-weight: 600; min-width: 22px; text-align: right;
+  }
+  .conv-info { flex: 1; min-width: 0; }
+  .conv-title { font-size: 14px; font-weight: 500; color: var(--theme-text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conv-title mark { background: #FFE066; color: #5a4700; border-radius: 2px; padding: 0 1px; }
+  .conv-meta { font-size: 11px; opacity: 0.45; font-family: -apple-system, sans-serif; }
+  .conv-meta-detail { font-size: 11px; opacity: 0.55; margin-top: 2px; font-family: -apple-system, sans-serif; }
+  .conv-arrow { color: var(--theme); opacity: 0.35; font-size: 14px; flex-shrink: 0; }
 
-/* Upload area */
-.upload-area {
-background: white;
-border: 2px dashed var(–theme-light);
-border-radius: 16px;
-padding: 30px;
-text-align: center;
-cursor: pointer;
-color: var(–theme);
-transition: all 0.2s;
-margin-bottom: 16px;
-}
-.upload-area:active { background: var(–theme-bg); }
-.upload-area .upload-icon { font-size: 36px; display: block; margin-bottom: 8px; }
-.upload-area p { font-size: 13px; opacity: 0.7; }
+  /* ===== CHAT SCREEN ===== */
+  #chat { background: var(--chat-bg); }
+  
+  /* Chat background options */
+  .chat-bg-none { }
+  .chat-bg-dots { background-image: radial-gradient(var(--theme-light) 1.2px, transparent 1.2px); background-size: 18px 18px; }
+  .chat-bg-grid { background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px); background-size: 20px 20px; }
+  .chat-bg-lines { background-image: repeating-linear-gradient(0deg, transparent, transparent 18px, var(--theme-light) 18px, var(--theme-light) 19px); }
+  .chat-bg-image { background-size: cover; background-position: center; }
 
-/* ===== CONVERSATIONS LIST ===== */
-#conversations .body { flex: 1; overflow-y: auto; padding: 12px; }
+  .chat-body-wrap { flex: 1; display: flex; overflow: hidden; position: relative; }
+  .chat-body {
+    flex: 1; overflow-y: auto; padding: 12px 10px;
+    display: flex; flex-direction: column; gap: 8px;
+    scroll-behavior: smooth;
+  }
+  /* Scrollbar track on right */
+  .chat-body::-webkit-scrollbar { width: 4px; }
+  .chat-body::-webkit-scrollbar-track { background: transparent; }
+  .chat-body::-webkit-scrollbar-thumb { background: var(--theme-light); border-radius: 2px; }
 
-.filter-tabs {
-display: flex;
-gap: 8px;
-padding: 10px 12px 0;
-flex-shrink: 0;
-}
-.filter-tab {
-padding: 5px 14px;
-border-radius: 20px;
-font-size: 12px;
-border: 1.5px solid var(–theme-light);
-background: transparent;
-color: var(–theme);
-cursor: pointer;
-transition: all 0.2s;
-font-family: var(–font-family);
-}
-.filter-tab.active { background: var(–theme); color: white; border-color: var(–theme); }
+  /* Side scroll track */
+  .chat-scrollbar {
+    width: 16px; flex-shrink: 0; display: flex; flex-direction: column;
+    align-items: center; padding: 8px 0; cursor: pointer; position: relative;
+  }
+  .chat-scrollbar-track {
+    width: 3px; flex: 1; background: var(--theme-bg); border-radius: 2px;
+    position: relative; overflow: hidden;
+  }
+  .chat-scrollbar-thumb {
+    width: 3px; background: var(--theme-light); border-radius: 2px;
+    position: absolute; top: 0; left: 0; min-height: 20px;
+    transition: background 0.15s; cursor: grab;
+  }
+  .chat-scrollbar-thumb:active { background: var(--theme); cursor: grabbing; }
 
-.search-box {
-margin: 10px 12px;
-background: white;
-border-radius: 12px;
-display: flex;
-align-items: center;
-gap: 8px;
-padding: 8px 14px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-flex-shrink: 0;
-}
-.search-box input {
-flex: 1;
-border: none;
-outline: none;
-font-size: 13px;
-background: transparent;
-color: var(–theme-text);
-font-family: var(–font-family);
-}
-.search-box input::placeholder { opacity: 0.4; }
+  .msg-wrapper { display: flex; gap: 6px; max-width: 88%; animation: msgIn 0.18s ease; }
+  @keyframes msgIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
+  .msg-wrapper.ai { align-self: flex-start; }
+  .msg-wrapper.user { align-self: flex-end; flex-direction: row-reverse; }
 
-.conv-item {
-background: white;
-border-radius: 14px;
-padding: 14px;
-margin-bottom: 10px;
-box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-cursor: pointer;
-transition: all 0.2s;
-display: flex;
-align-items: flex-start;
-gap: 10px;
-}
-.conv-item:active { transform: scale(0.98); background: var(–theme-soft); }
-.conv-item.active-item { background: var(–theme-soft); border-left: 3px solid var(–theme); }
-.conv-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
-.conv-info { flex: 1; min-width: 0; }
-.conv-title { font-size: 14px; font-weight: 500; color: var(–theme-text); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.conv-meta { font-size: 11px; opacity: 0.5; }
-.conv-badge {
-background: var(–theme-bg);
-color: var(–theme);
-font-size: 11px;
-padding: 2px 8px;
-border-radius: 10px;
-flex-shrink: 0;
-align-self: center;
-}
+  .msg-avatar {
+    width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+    background: var(--theme-bg); border: 1.5px solid var(--theme-light);
+    align-self: flex-end; overflow: hidden;
+  }
+  .msg-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
-/* ===== CHAT SCREEN ===== */
-#chat { background: var(–theme-soft); }
-.chat-bg-dots { background-image: radial-gradient(var(–theme-light) 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3; position: fixed; inset: 0; pointer-events: none; }
+  .msg-bubble-wrap { display: flex; flex-direction: column; gap: 3px; }
+  .msg-wrapper.user .msg-bubble-wrap { align-items: flex-end; }
 
-.chat-body {
-flex: 1;
-overflow-y: auto;
-padding: 12px 10px;
-display: flex;
-flex-direction: column;
-gap: 8px;
-position: relative;
-z-index: 1;
-}
+  .msg-bubble {
+    padding: 10px 14px; border-radius: 20px; font-size: var(--font-size);
+    line-height: 1.65; white-space: pre-wrap; word-break: break-word;
+  }
+  .msg-wrapper.ai .msg-bubble {
+    background: var(--bubble-ai); color: var(--bubble-ai-text);
+    border-bottom-left-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .msg-wrapper.user .msg-bubble {
+    background: var(--bubble-user); color: var(--bubble-user-text);
+    border-bottom-right-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .msg-bubble mark { background: rgba(255,230,0,0.6); color: inherit; border-radius: 2px; padding: 0 1px; }
+  .msg-time { font-size: 10px; opacity: 0.38; padding: 0 4px; font-family: -apple-system, sans-serif; }
 
-.msg-wrapper { display: flex; gap: 6px; max-width: 88%; animation: msgIn 0.2s ease; }
-@keyframes msgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.msg-wrapper.ai { align-self: flex-start; }
-.msg-wrapper.user { align-self: flex-end; flex-direction: row-reverse; }
+  /* Thinking */
+  .thinking-btn {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 11px;
+    color: var(--theme); background: rgba(155,142,196,0.1); border: 1px solid var(--theme-light);
+    border-radius: 10px; padding: 4px 10px; cursor: pointer; transition: all 0.15s;
+    font-family: -apple-system, sans-serif; margin-bottom: 2px;
+  }
+  .thinking-btn:active { background: var(--theme-light); }
 
-.msg-avatar {
-width: 30px;
-height: 30px;
-border-radius: 50%;
-flex-shrink: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 14px;
-background: var(–theme-bg);
-border: 1.5px solid var(–theme-light);
-align-self: flex-end;
-object-fit: cover;
-}
+  /* Chat search bar */
+  .chat-search-bar {
+    flex-shrink: 0; padding: 8px 12px;
+    background: var(--chat-bg); border-bottom: 1px solid var(--border);
+    display: none; align-items: center; gap: 8px;
+  }
+  .chat-search-bar.visible { display: flex; }
+  .chat-search-bar input {
+    flex: 1; background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 7px 12px; font-size: 14px; color: var(--theme-text);
+    outline: none; font-family: var(--font-family);
+  }
+  .chat-search-info { font-size: 11px; opacity: 0.5; white-space: nowrap; font-family: -apple-system, sans-serif; }
+  .chat-search-nav { display: flex; gap: 4px; }
+  .chat-snav-btn {
+    width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--card-bg); color: var(--theme); cursor: pointer; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
 
-.msg-bubble-wrap { display: flex; flex-direction: column; gap: 3px; }
-.msg-wrapper.user .msg-bubble-wrap { align-items: flex-end; }
+  /* Thinking bottom sheet */
+  .thinking-sheet {
+    position: fixed; bottom: -100%; left: 0; right: 0;
+    background: var(--card-bg); border-radius: 22px 22px 0 0;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.14); z-index: 100;
+    transition: bottom 0.32s cubic-bezier(0.34,1.4,0.64,1);
+    max-height: 65vh; display: flex; flex-direction: column;
+  }
+  .thinking-sheet.open { bottom: 0; }
+  .thinking-handle { width: 36px; height: 4px; background: rgba(0,0,0,0.1); border-radius: 2px; margin: 12px auto 0; flex-shrink: 0; }
+  .thinking-sheet-header {
+    padding: 10px 18px 8px; font-size: 14px; color: var(--theme); font-weight: 600;
+    flex-shrink: 0; display: flex; align-items: center; gap: 6px; font-family: -apple-system, sans-serif;
+  }
+  .thinking-content {
+    padding: 0 18px 24px; overflow-y: auto; font-size: 13px; line-height: 1.75;
+    color: #999; white-space: pre-wrap;
+  }
+  .thinking-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.18); z-index: 99; display: none; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+  .thinking-overlay.show { display: block; }
 
-.msg-bubble {
-padding: 9px 13px;
-border-radius: 18px;
-font-size: var(–font-size);
-line-height: 1.65;
-white-space: pre-wrap;
-word-break: break-word;
-position: relative;
-}
-.msg-wrapper.ai .msg-bubble {
-background: var(–bubble-ai);
-color: var(–bubble-ai-text);
-border-bottom-left-radius: 5px;
-box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-}
-.msg-wrapper.user .msg-bubble {
-background: var(–bubble-user);
-color: var(–bubble-user-text);
-border-bottom-right-radius: 5px;
-box-shadow: 0 1px 6px rgba(0,0,0,0.15);
-}
+  /* ===== TIMELINE ===== */
+  #timeline .tl-body { flex: 1; overflow-y: auto; padding: 16px; }
+  
+  .timeline-stats {
+    background: var(--card-bg); border-radius: 20px; padding: 18px;
+    margin-bottom: 16px; box-shadow: var(--shadow); font-size: 14px; line-height: 1.9;
+    border: 1px solid var(--border);
+  }
+  .timeline-stats .highlight { color: var(--theme); font-weight: 600; }
+  .tl-divider { height: 1px; background: var(--theme-bg); margin: 10px 0; }
 
-.msg-time { font-size: 10px; opacity: 0.4; padding: 0 4px; }
+  /* Time distribution chart */
+  .hour-chart { margin: 10px 0 4px; }
+  .hour-bars { display: flex; align-items: flex-end; gap: 1.5px; height: 40px; }
+  .hour-bar { flex: 1; background: var(--theme-light); border-radius: 2px 2px 0 0; min-height: 2px; transition: background 0.2s; }
+  .hour-bar.peak { background: var(--theme); }
+  .hour-labels { display: flex; justify-content: space-between; margin-top: 3px; }
+  .hour-label { font-size: 9px; opacity: 0.4; font-family: -apple-system, sans-serif; }
 
-/* Thinking toggle */
-.thinking-btn {
-display: inline-flex;
-align-items: center;
-gap: 4px;
-font-size: 11px;
-color: var(–theme);
-background: var(–theme-bg);
-border: 1px solid var(–theme-light);
-border-radius: 10px;
-padding: 3px 10px;
-cursor: pointer;
-transition: all 0.2s;
-font-family: var(–font-family);
-margin-bottom: 2px;
-}
-.thinking-btn:active { background: var(–theme-light); }
+  .tl-items { position: relative; padding-left: 28px; }
+  .tl-items::before {
+    content: ''; position: absolute; left: 9px; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--theme-light), transparent); border-radius: 1px;
+  }
+  .tl-item {
+    position: relative; background: var(--card-bg); border-radius: 16px;
+    padding: 12px 14px; margin-bottom: 10px; box-shadow: var(--shadow);
+    cursor: pointer; transition: all 0.15s; border: 1px solid var(--border);
+  }
+  .tl-item:active { transform: translateX(4px); opacity: 0.85; }
+  .tl-item::before {
+    content: ''; position: absolute; left: -22px; top: 16px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--theme); border: 2px solid var(--card-bg);
+    box-shadow: 0 0 0 2px var(--theme-light);
+  }
+  .tl-date { font-size: 11px; color: var(--theme); margin-bottom: 3px; opacity: 0.7; font-family: -apple-system, sans-serif; }
+  .tl-conv-title { font-size: 14px; font-weight: 500; }
+  .tl-conv-meta { font-size: 11px; opacity: 0.4; margin-top: 2px; font-family: -apple-system, sans-serif; }
 
-/* Thinking drawer (bottom sheet) */
-.thinking-sheet {
-position: fixed;
-bottom: -100%;
-left: 0;
-right: 0;
-background: white;
-border-radius: 20px 20px 0 0;
-box-shadow: 0 -8px 30px rgba(0,0,0,0.12);
-z-index: 100;
-transition: bottom 0.35s cubic-bezier(0.34,1.56,0.64,1);
-max-height: 60vh;
-display: flex;
-flex-direction: column;
-}
-.thinking-sheet.open { bottom: 0; }
-.thinking-handle { width: 40px; height: 4px; background: #e0e0e0; border-radius: 2px; margin: 12px auto 0; flex-shrink: 0; }
-.thinking-sheet-header {
-padding: 10px 18px 8px;
-font-size: 13px;
-color: var(–theme);
-font-weight: 500;
-flex-shrink: 0;
-display: flex;
-align-items: center;
-gap: 6px;
-}
-.thinking-content {
-padding: 0 18px 18px;
-overflow-y: auto;
-font-size: 13px;
-line-height: 1.7;
-color: #888;
-white-space: pre-wrap;
-}
-.thinking-overlay {
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.2);
-z-index: 99;
-display: none;
-}
-.thinking-overlay.show { display: block; }
+  /* ===== SETTINGS ===== */
+  #settings .set-body { flex: 1; overflow-y: auto; padding: 16px; }
+  
+  .setting-section {
+    background: var(--card-bg); border-radius: 20px; padding: 18px;
+    margin-bottom: 14px; box-shadow: var(--shadow); border: 1px solid var(--border);
+  }
+  .setting-section-title {
+    font-size: 12px; color: var(--theme); letter-spacing: 1px; margin-bottom: 14px;
+    opacity: 0.7; font-weight: 600; text-transform: uppercase; font-family: -apple-system, sans-serif;
+  }
+  
+  .name-inputs { display: flex; gap: 10px; }
+  .name-input-wrap { flex: 1; }
+  .name-input-label { font-size: 11px; opacity: 0.5; margin-bottom: 5px; font-family: -apple-system, sans-serif; }
+  .name-input {
+    width: 100%; background: var(--theme-bg); border: 1.5px solid var(--theme-light);
+    border-radius: 12px; padding: 10px 12px; font-size: 14px; color: var(--theme-text);
+    outline: none; transition: border-color 0.2s; font-family: var(--font-family);
+  }
+  .name-input:focus { border-color: var(--theme); }
 
-/* ===== TIMELINE SCREEN ===== */
-#timeline .body { flex: 1; overflow-y: auto; padding: 16px; }
+  .avatar-pickers { display: flex; gap: 24px; margin-top: 4px; }
+  .avatar-picker-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .avatar-preview {
+    width: 64px; height: 64px; border-radius: 50%; background: var(--theme-bg);
+    border: 2px solid var(--theme-light); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 28px;
+    overflow: hidden; transition: all 0.15s; position: relative;
+  }
+  .avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .avatar-preview:active { transform: scale(0.94); }
+  .avatar-label { font-size: 12px; opacity: 0.55; font-family: -apple-system, sans-serif; }
+  .avatar-file-input { display: none; }
 
-.timeline-stats {
-background: white;
-border-radius: 18px;
-padding: 18px;
-margin-bottom: 16px;
-box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-font-size: 14px;
-line-height: 1.9;
-}
-.timeline-stats .highlight { color: var(–theme); font-weight: 500; }
-.tl-divider { height: 1px; background: var(–theme-bg); margin: 12px 0; }
+  .theme-colors { display: flex; gap: 12px; flex-wrap: wrap; }
+  .theme-color-btn {
+    width: 42px; height: 42px; border-radius: 50%; border: 3px solid transparent;
+    cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .theme-color-btn.selected { border-color: white; box-shadow: 0 0 0 2.5px var(--theme); transform: scale(1.1); }
+  .theme-color-btn::after {
+    content: '✓'; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 16px; opacity: 0;
+  }
+  .theme-color-btn.selected::after { opacity: 1; }
 
-.tl-items { position: relative; padding-left: 24px; }
-.tl-items::before {
-content: ‘’;
-position: absolute;
-left: 7px;
-top: 0;
-bottom: 0;
-width: 2px;
-background: linear-gradient(to bottom, var(–theme-light), transparent);
-border-radius: 1px;
-}
-.tl-item {
-position: relative;
-background: white;
-border-radius: 14px;
-padding: 12px 14px;
-margin-bottom: 12px;
-box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-cursor: pointer;
-transition: all 0.2s;
-}
-.tl-item:active { transform: translateX(3px); }
-.tl-item::before {
-content: ‘’;
-position: absolute;
-left: -20px;
-top: 16px;
-width: 10px;
-height: 10px;
-border-radius: 50%;
-background: var(–theme);
-border: 2px solid white;
-box-shadow: 0 0 0 2px var(–theme-light);
-}
-.tl-date { font-size: 11px; color: var(–theme); margin-bottom: 4px; opacity: 0.8; }
-.tl-conv-title { font-size: 14px; font-weight: 500; }
-.tl-conv-meta { font-size: 11px; opacity: 0.4; margin-top: 3px; }
+  /* Chat background selector */
+  .chat-bg-selector { display: flex; gap: 10px; }
+  .chat-bg-opt {
+    flex: 1; height: 52px; border-radius: 12px; border: 2.5px solid transparent;
+    cursor: pointer; overflow: hidden; transition: all 0.15s;
+    background: var(--theme-bg); display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .chat-bg-opt.selected { border-color: var(--theme); }
+  .chat-bg-opt:active { transform: scale(0.95); }
+  .chat-bg-opt-dots { background-image: radial-gradient(var(--theme) 1px, transparent 1px); background-size: 8px 8px; }
+  .chat-bg-opt-grid { background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px); background-size: 10px 10px; }
+  .chat-bg-opt-lines { background-image: repeating-linear-gradient(0deg, transparent, transparent 8px, var(--theme-light) 8px, var(--theme-light) 9px); }
+  .chat-bg-opt-img { font-size: 22px; }
 
-/* ===== SETTINGS SCREEN ===== */
-#settings .body { flex: 1; overflow-y: auto; padding: 16px; }
+  .font-slider { width: 100%; accent-color: var(--theme); height: 4px; margin-top: 10px; cursor: pointer; }
+  .font-preview { font-size: 13px; opacity: 0.55; margin-top: 8px; font-family: -apple-system, sans-serif; }
 
-.setting-section {
-background: white;
-border-radius: 18px;
-padding: 18px;
-margin-bottom: 16px;
-box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-}
-.setting-section-title {
-font-size: 12px;
-color: var(–theme);
-letter-spacing: 2px;
-margin-bottom: 14px;
-opacity: 0.8;
-font-weight: 500;
-}
+  .save-btn {
+    width: 100%; background: var(--theme); color: white; border: none;
+    border-radius: 16px; padding: 15px; font-size: 16px; cursor: pointer;
+    transition: all 0.15s; font-family: -apple-system, sans-serif; font-weight: 600;
+    letter-spacing: 0.5px; margin-top: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  }
+  .save-btn:active { opacity: 0.82; transform: scale(0.98); }
 
-.name-inputs { display: flex; gap: 10px; }
-.name-input-wrap { flex: 1; }
-.name-input-label { font-size: 11px; opacity: 0.5; margin-bottom: 5px; }
-.name-input {
-width: 100%;
-background: var(–theme-bg);
-border: 1.5px solid var(–theme-light);
-border-radius: 12px;
-padding: 9px 12px;
-font-size: 14px;
-color: var(–theme-text);
-outline: none;
-transition: border-color 0.2s;
-font-family: var(–font-family);
-}
-.name-input:focus { border-color: var(–theme); }
+  /* ===== BOTTOM NAV - Apple style ===== */
+  .bottom-nav {
+    background: rgba(255,255,255,0.92);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    display: flex;
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px));
+    border-top: 0.5px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+  [data-theme="dark"] .bottom-nav { background: rgba(30,30,46,0.92); border-top-color: rgba(255,255,255,0.08); }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+    cursor: pointer; padding: 4px 0; transition: all 0.15s; border: none;
+    background: none; color: #b0b0b0; font-family: -apple-system, sans-serif;
+  }
+  .nav-item.active { color: var(--theme); }
+  .nav-item .nav-icon { font-size: 24px; }
+  .nav-item .nav-label { font-size: 10px; font-weight: 500; }
+  .nav-item:active { opacity: 0.6; transform: scale(0.9); }
 
-/* Avatar pickers */
-.avatar-pickers { display: flex; gap: 20px; margin-top: 4px; }
-.avatar-picker-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.avatar-preview {
-width: 60px;
-height: 60px;
-border-radius: 50%;
-background: var(–theme-bg);
-border: 2px solid var(–theme-light);
-cursor: pointer;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 26px;
-overflow: hidden;
-transition: border-color 0.2s;
-position: relative;
-}
-.avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
-.avatar-preview:active { border-color: var(–theme); }
-.avatar-preview .edit-overlay {
-position: absolute;
-inset: 0;
-background: rgba(0,0,0,0.3);
-display: flex;
-align-items: center;
-justify-content: center;
-opacity: 0;
-transition: opacity 0.2s;
-color: white;
-font-size: 18px;
-border-radius: 50%;
-}
-.avatar-preview:active .edit-overlay { opacity: 1; }
-.avatar-label { font-size: 12px; opacity: 0.6; }
-.avatar-file-input { display: none; }
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed; bottom: 120px; left: 50%;
+    transform: translateX(-50%) translateY(16px);
+    background: rgba(30,30,46,0.85); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    color: white; padding: 9px 22px; border-radius: 22px; font-size: 13px;
+    opacity: 0; transition: all 0.28s; z-index: 200; pointer-events: none;
+    white-space: nowrap; font-family: -apple-system, sans-serif;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* Theme colors */
-.theme-colors { display: flex; gap: 12px; flex-wrap: wrap; }
-.theme-color-btn {
-width: 40px;
-height: 40px;
-border-radius: 50%;
-border: 3px solid transparent;
-cursor: pointer;
-transition: all 0.2s;
-position: relative;
-}
-.theme-color-btn.selected { border-color: white; box-shadow: 0 0 0 2px var(–theme); transform: scale(1.1); }
-.theme-color-btn::after {
-content: ‘✓’;
-position: absolute;
-inset: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-color: white;
-font-size: 16px;
-opacity: 0;
-}
-.theme-color-btn.selected::after { opacity: 1; }
+  /* Date separator */
+  .date-sep {
+    text-align: center; font-size: 11px; color: #bbb; margin: 6px 0;
+    display: flex; align-items: center; gap: 8px;
+    font-family: -apple-system, sans-serif;
+  }
+  .date-sep::before, .date-sep::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* Font size slider */
-.font-slider { width: 100%; accent-color: var(–theme); height: 4px; margin-top: 8px; }
-.font-preview { font-size: 13px; opacity: 0.6; margin-top: 8px; }
+  .empty-state { text-align: center; padding: 48px 20px; color: #ccc; font-size: 14px; }
+  .empty-state .empty-icon { font-size: 52px; display: block; margin-bottom: 14px; }
 
-/* Save btn */
-.save-btn {
-width: 100%;
-background: var(–theme);
-color: white;
-border: none;
-border-radius: 14px;
-padding: 14px;
-font-size: 16px;
-cursor: pointer;
-transition: all 0.2s;
-font-family: var(–font-family);
-letter-spacing: 1px;
-margin-top: 4px;
-}
-.save-btn:active { opacity: 0.85; transform: scale(0.98); }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--theme-light); border-radius: 2px; }
 
-/* ===== BOTTOM NAV ===== */
-.bottom-nav {
-background: white;
-display: flex;
-padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
-border-top: 1px solid var(–theme-bg);
-flex-shrink: 0;
-box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
-}
-.nav-item {
-flex: 1;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 3px;
-cursor: pointer;
-padding: 4px 0;
-transition: all 0.2s;
-border: none;
-background: none;
-color: #bbb;
-font-family: var(–font-family);
-}
-.nav-item.active { color: var(–theme); }
-.nav-item .nav-icon { font-size: 22px; }
-.nav-item .nav-label { font-size: 10px; }
-
-/* ===== TOAST ===== */
-.toast {
-position: fixed;
-bottom: 100px;
-left: 50%;
-transform: translateX(-50%) translateY(20px);
-background: rgba(0,0,0,0.75);
-color: white;
-padding: 8px 20px;
-border-radius: 20px;
-font-size: 13px;
-opacity: 0;
-transition: all 0.3s;
-z-index: 200;
-pointer-events: none;
-white-space: nowrap;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(–theme-light); border-radius: 2px; }
-
-/* Date separator */
-.date-sep {
-text-align: center;
-font-size: 11px;
-color: #bbb;
-margin: 8px 0;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-.date-sep::before, .date-sep::after { content: ‘’; flex: 1; height: 1px; background: var(–theme-bg); }
-
-.empty-state {
-text-align: center;
-padding: 40px 20px;
-color: #ccc;
-font-size: 14px;
-}
-.empty-state .empty-icon { font-size: 48px; display: block; margin-bottom: 12px; }
-
-/* Chat header middle align */
-.chat-header-title {
-position: absolute;
-left: 50%;
-transform: translateX(-50%);
-font-size: 15px;
-font-weight: 500;
-max-width: 55%;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-text-align: center;
-}
-.header { position: relative; }
+  .section-label {
+    font-size: 13px; color: var(--theme); font-weight: 600; opacity: 0.7;
+    letter-spacing: 0.5px; margin-bottom: 10px; padding-left: 2px;
+    font-family: -apple-system, sans-serif;
+  }
 </style>
-
 </head>
 <body>
 
 <!-- ===== HOME ===== -->
-
 <div id="home" class="screen active">
   <div class="home-header">
     <div class="home-header-top">
       <div class="home-header-btns">
-        <button class="header-btn" onclick="showScreen('conversations')">💬</button>
+        <button class="header-btn" onclick="showScreen('conversations')">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </button>
       </div>
       <div></div>
       <div class="home-header-btns">
-        <button class="header-btn" onclick="uploadJsonFile()">⬆</button>
-        <button class="header-btn" onclick="showScreen('settings')">⚙</button>
+        <button class="header-btn" onclick="uploadJsonFile()">
+          <svg viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path></svg>
+        </button>
+        <button class="header-btn" onclick="switchNav('settings', document.querySelector('#settings .nav-item:last-child'))">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
       </div>
     </div>
     <div class="garden-title"><span id="ai-name-display">AI</span> &amp; <span id="user-name-display">用户</span> Logs</div>
@@ -703,285 +608,324 @@ text-align: center;
   </div>
 
   <div class="home-body" id="home-body">
-    <!-- Upload area when no data -->
     <div id="upload-prompt">
       <div class="upload-area" onclick="uploadJsonFile()">
         <span class="upload-icon">🌸</span>
         <p>点击上传 Claude 聊天记录</p>
-        <p style="font-size:11px;margin-top:6px;opacity:0.5">支持 JSON 格式文件</p>
+        <p style="font-size:11px;margin-top:6px;opacity:0.45">支持 JSON 格式文件</p>
       </div>
-      <div class="section-title">如何导出 Claude 聊天记录？</div>
-      <div class="stats-card" style="font-size:13px;line-height:2;">
+      <div class="section-label">如何导出 Claude 聊天记录？</div>
+      <div class="card stats-card" style="font-size:13px;line-height:2.1;">
         <b>1.</b> 打开 Claude.ai 网页端<br>
         <b>2.</b> 点击右上角账户头像<br>
         <b>3.</b> 找到「导出数据」选项<br>
         <b>4.</b> 下载后将 JSON 文件上传到这里 🌿
       </div>
     </div>
-
-```
-<!-- Stats when data loaded -->
-<div id="stats-content" style="display:none">
-  <div class="stats-card" id="main-stats-text">加载中...</div>
-  <div class="stats-row">
-    <div class="stat-box">
-      <div class="stat-box-val" id="stat-days">—</div>
-      <div class="stat-box-label">共同天数</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-box-val" id="stat-convs">—</div>
-      <div class="stat-box-label">对话数</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-box-val" id="stat-msgs">—</div>
-      <div class="stat-box-label">消息数</div>
-    </div>
-  </div>
-  <div class="person-cards">
-    <div class="person-card">
-      <div class="person-card-header">
-        <div class="person-avatar" id="home-ai-avatar">🤖</div>
-        <span class="person-name" id="home-ai-name">AI</span>
+    
+    <div id="stats-content" style="display:none">
+      <div class="card stats-card" id="main-stats-text">加载中...</div>
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-box-val" id="stat-days">—</div><div class="stat-box-label">共同天数</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="stat-convs">—</div><div class="stat-box-label">对话数</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="stat-msgs">—</div><div class="stat-box-label">消息数</div></div>
       </div>
-      <div class="person-stat"><span>总字数</span><span id="ai-total-chars">—</span></div>
-      <div class="person-stat"><span>消息数</span><span id="ai-total-msgs">—</span></div>
-      <div class="person-stat"><span>平均每条</span><span id="ai-avg-chars">—</span></div>
-    </div>
-    <div class="person-card">
-      <div class="person-card-header">
-        <div class="person-avatar" id="home-user-avatar">🌸</div>
-        <span class="person-name" id="home-user-name">用户</span>
+      <div class="person-cards">
+        <div class="person-card">
+          <div class="person-card-header">
+            <div class="person-avatar" id="home-ai-avatar">🤖</div>
+            <span class="person-name" id="home-ai-name">AI</span>
+          </div>
+          <div class="person-stat"><span>总字数</span><span id="ai-total-chars">—</span></div>
+          <div class="person-stat"><span>消息数</span><span id="ai-total-msgs">—</span></div>
+          <div class="person-stat"><span>平均每条</span><span id="ai-avg-chars">—</span></div>
+        </div>
+        <div class="person-card">
+          <div class="person-card-header">
+            <div class="person-avatar" id="home-user-avatar">🌸</div>
+            <span class="person-name" id="home-user-name">用户</span>
+          </div>
+          <div class="person-stat"><span>总字数</span><span id="user-total-chars">—</span></div>
+          <div class="person-stat"><span>消息数</span><span id="user-total-msgs">—</span></div>
+          <div class="person-stat"><span>平均每条</span><span id="user-avg-chars">—</span></div>
+        </div>
       </div>
-      <div class="person-stat"><span>总字数</span><span id="user-total-chars">—</span></div>
-      <div class="person-stat"><span>消息数</span><span id="user-total-msgs">—</span></div>
-      <div class="person-stat"><span>平均每条</span><span id="user-avg-chars">—</span></div>
-    </div>
-  </div>
-  <div class="quick-btns">
-    <div class="quick-btn" onclick="showScreen('conversations')">
-      <span class="qb-icon">💬</span>对话列表
-    </div>
-    <div class="quick-btn" onclick="showScreen('timeline')">
-      <span class="qb-icon">🗓</span>时间轴
-    </div>
-  </div>
-</div>
-```
 
-  </div>
+      <!-- Calendar -->
+      <div class="section-label">聊天日历</div>
+      <div class="calendar-card">
+        <div class="calendar-header">
+          <div class="calendar-month-label" id="cal-month-label">2025年10月</div>
+          <div class="calendar-nav">
+            <button class="cal-nav-btn" onclick="calPrev()">‹</button>
+            <button class="cal-nav-btn" onclick="calNext()">›</button>
+          </div>
+        </div>
+        <div class="cal-weekdays">
+          <div class="cal-weekday">日</div><div class="cal-weekday">一</div>
+          <div class="cal-weekday">二</div><div class="cal-weekday">三</div>
+          <div class="cal-weekday">四</div><div class="cal-weekday">五</div>
+          <div class="cal-weekday">六</div>
+        </div>
+        <div class="cal-days" id="cal-days"></div>
+      </div>
 
+      <div class="quick-btns">
+        <div class="quick-btn" onclick="showScreen('conversations')">
+          <span class="qb-icon">💬</span>对话列表
+        </div>
+        <div class="quick-btn" onclick="showScreen('timeline')">
+          <span class="qb-icon">🗓</span>时间轴
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <nav class="bottom-nav">
-    <button class="nav-item active" onclick="switchNav('home', this)"><span class="nav-icon">🏡</span><span class="nav-label">花园</span></button>
-    <button class="nav-item" onclick="switchNav('conversations', this)"><span class="nav-icon">💬</span><span class="nav-label">对话</span></button>
-    <button class="nav-item" onclick="switchNav('timeline', this)"><span class="nav-icon">🗓</span><span class="nav-label">时间轴</span></button>
-    <button class="nav-item" onclick="switchNav('settings', this)"><span class="nav-icon">⚙</span><span class="nav-label">设置</span></button>
+    <button class="nav-item active" onclick="switchNav('home',this)"><span class="nav-icon">🏡</span><span class="nav-label">花园</span></button>
+    <button class="nav-item" onclick="switchNav('conversations',this)"><span class="nav-icon">💬</span><span class="nav-label">对话</span></button>
+    <button class="nav-item" onclick="switchNav('timeline',this)"><span class="nav-icon">🗓</span><span class="nav-label">时间轴</span></button>
+    <button class="nav-item" onclick="switchNav('settings',this)"><span class="nav-icon">⚙️</span><span class="nav-label">设置</span></button>
   </nav>
 </div>
 
 <!-- ===== CONVERSATIONS ===== -->
-
 <div id="conversations" class="screen">
   <div class="header">
     <div class="header-title">对话列表</div>
   </div>
   <div class="filter-tabs">
     <button class="filter-tab active" onclick="filterConvs('all',this)">全部</button>
-    <button class="filter-tab" onclick="filterConvs('recent',this)">最近</button>
+    <button class="filter-tab" onclick="filterConvs('recent',this)">最近7天</button>
+    <button class="filter-tab" onclick="filterConvs('month',this)">本月</button>
   </div>
   <div class="search-box">
-    <span>🔍</span>
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.4;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input type="text" id="search-input" placeholder="搜索对话标题..." oninput="searchConvs(this.value)">
+    <span class="search-clear" id="search-clear-btn" onclick="clearSearch()">✕</span>
   </div>
+  <div class="conv-count" id="conv-count"></div>
   <div class="body" id="conv-list">
-    <div class="empty-state"><span class="empty-icon">🌱</span>暂无聊天记录<br><span style="font-size:12px;margin-top:6px;display:block">请先上传 JSON 文件</span></div>
+    <div class="empty-state"><span class="empty-icon">🌱</span>暂无聊天记录<br><span style="font-size:12px;margin-top:6px;display:block;opacity:0.6">请先上传 JSON 文件</span></div>
   </div>
   <nav class="bottom-nav">
-    <button class="nav-item" onclick="switchNav('home', this)"><span class="nav-icon">🏡</span><span class="nav-label">花园</span></button>
-    <button class="nav-item active" onclick="switchNav('conversations', this)"><span class="nav-icon">💬</span><span class="nav-label">对话</span></button>
-    <button class="nav-item" onclick="switchNav('timeline', this)"><span class="nav-icon">🗓</span><span class="nav-label">时间轴</span></button>
-    <button class="nav-item" onclick="switchNav('settings', this)"><span class="nav-icon">⚙</span><span class="nav-label">设置</span></button>
+    <button class="nav-item" onclick="switchNav('home',this)"><span class="nav-icon">🏡</span><span class="nav-label">花园</span></button>
+    <button class="nav-item active" onclick="switchNav('conversations',this)"><span class="nav-icon">💬</span><span class="nav-label">对话</span></button>
+    <button class="nav-item" onclick="switchNav('timeline',this)"><span class="nav-icon">🗓</span><span class="nav-label">时间轴</span></button>
+    <button class="nav-item" onclick="switchNav('settings',this)"><span class="nav-icon">⚙️</span><span class="nav-label">设置</span></button>
   </nav>
 </div>
 
 <!-- ===== CHAT ===== -->
-
 <div id="chat" class="screen">
-  <div class="header">
-    <button class="header-btn" onclick="goBack()">←</button>
-    <div class="chat-header-title" id="chat-title">对话</div>
-    <div style="width:34px"></div>
+  <div class="header" style="position:relative">
+    <button class="header-btn" onclick="goBack()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <div class="header-title" id="chat-title" style="position:absolute;left:50%;transform:translateX(-50%);max-width:60%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">对话</div>
+    <button class="header-btn" onclick="toggleChatSearch()" style="margin-left:auto">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
   </div>
-  <div class="chat-bg-dots"></div>
-  <div class="chat-body" id="chat-body"></div>
+  <div class="chat-search-bar" id="chat-search-bar">
+    <input type="text" id="chat-search-input" placeholder="搜索消息内容..." oninput="chatSearch(this.value)">
+    <span class="chat-search-info" id="chat-search-info"></span>
+    <div class="chat-search-nav">
+      <button class="chat-snav-btn" onclick="chatSearchPrev()">↑</button>
+      <button class="chat-snav-btn" onclick="chatSearchNext()">↓</button>
+    </div>
+    <span style="cursor:pointer;opacity:0.5;font-size:16px;padding-left:2px" onclick="closeChatSearch()">✕</span>
+  </div>
+  <div class="chat-body-wrap" id="chat-body-wrap">
+    <div class="chat-body" id="chat-body"></div>
+    <div class="chat-scrollbar" id="chat-scrollbar" onmousedown="startScrollbarDrag(event)" ontouchstart="startScrollbarDrag(event)">
+      <div class="chat-scrollbar-track" id="chat-scrollbar-track">
+        <div class="chat-scrollbar-thumb" id="chat-scrollbar-thumb"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ===== TIMELINE ===== -->
-
 <div id="timeline" class="screen">
-  <div class="header">
-    <div class="header-title">时间轴</div>
-  </div>
-  <div class="body" style="flex:1;overflow-y:auto;padding:16px" id="timeline-body">
+  <div class="header"><div class="header-title">时间轴</div></div>
+  <div class="tl-body" id="timeline-body">
     <div class="empty-state"><span class="empty-icon">🌿</span>暂无数据</div>
   </div>
   <nav class="bottom-nav">
-    <button class="nav-item" onclick="switchNav('home', this)"><span class="nav-icon">🏡</span><span class="nav-label">花园</span></button>
-    <button class="nav-item" onclick="switchNav('conversations', this)"><span class="nav-icon">💬</span><span class="nav-label">对话</span></button>
-    <button class="nav-item active" onclick="switchNav('timeline', this)"><span class="nav-icon">🗓</span><span class="nav-label">时间轴</span></button>
-    <button class="nav-item" onclick="switchNav('settings', this)"><span class="nav-icon">⚙</span><span class="nav-label">设置</span></button>
+    <button class="nav-item" onclick="switchNav('home',this)"><span class="nav-icon">🏡</span><span class="nav-label">花园</span></button>
+    <button class="nav-item" onclick="switchNav('conversations',this)"><span class="nav-icon">💬</span><span class="nav-label">对话</span></button>
+    <button class="nav-item active" onclick="switchNav('timeline',this)"><span class="nav-icon">🗓</span><span class="nav-label">时间轴</span></button>
+    <button class="nav-item" onclick="switchNav('settings',this)"><span class="nav-icon">⚙️</span><span class="nav-label">设置</span></button>
   </nav>
 </div>
 
 <!-- ===== SETTINGS ===== -->
-
 <div id="settings" class="screen">
-  <div class="header">
-    <div class="header-title">设置</div>
-  </div>
-  <div class="body" style="flex:1;overflow-y:auto;padding:16px">
-
-```
-<div class="setting-section">
-  <div class="setting-section-title">昵称设置</div>
-  <div class="name-inputs">
-    <div class="name-input-wrap">
-      <div class="name-input-label">AI 名称</div>
-      <input type="text" class="name-input" id="ai-name-input" placeholder="AI">
-    </div>
-    <div class="name-input-wrap">
-      <div class="name-input-label">用户名称</div>
-      <input type="text" class="name-input" id="user-name-input" placeholder="用户">
-    </div>
-  </div>
-</div>
-
-<div class="setting-section">
-  <div class="setting-section-title">自定义头像</div>
-  <div class="avatar-pickers">
-    <div class="avatar-picker-item">
-      <div class="avatar-preview" id="ai-avatar-preview" onclick="document.getElementById('ai-avatar-file').click()">
-        🤖<div class="edit-overlay">✏</div>
+  <div class="header"><div class="header-title">设置</div></div>
+  <div class="set-body">
+    <div class="setting-section">
+      <div class="setting-section-title">昵称设置</div>
+      <div class="name-inputs">
+        <div class="name-input-wrap">
+          <div class="name-input-label">AI 名称</div>
+          <input type="text" class="name-input" id="ai-name-input" placeholder="AI">
+        </div>
+        <div class="name-input-wrap">
+          <div class="name-input-label">用户名称</div>
+          <input type="text" class="name-input" id="user-name-input" placeholder="用户">
+        </div>
       </div>
-      <div class="avatar-label">AI 头像</div>
-      <input type="file" accept="image/*" class="avatar-file-input" id="ai-avatar-file" onchange="handleAvatarChange(this,'ai')">
     </div>
-    <div class="avatar-picker-item">
-      <div class="avatar-preview" id="user-avatar-preview" onclick="document.getElementById('user-avatar-file').click()">
-        🌸<div class="edit-overlay">✏</div>
+
+    <div class="setting-section">
+      <div class="setting-section-title">自定义头像</div>
+      <div class="avatar-pickers">
+        <div class="avatar-picker-item">
+          <div class="avatar-preview" id="ai-avatar-preview" onclick="document.getElementById('ai-avatar-file').click()">🤖</div>
+          <div class="avatar-label">AI 头像</div>
+          <input type="file" accept="image/*" class="avatar-file-input" id="ai-avatar-file" onchange="handleAvatarChange(this,'ai')">
+        </div>
+        <div class="avatar-picker-item">
+          <div class="avatar-preview" id="user-avatar-preview" onclick="document.getElementById('user-avatar-file').click()">🌸</div>
+          <div class="avatar-label">用户头像</div>
+          <input type="file" accept="image/*" class="avatar-file-input" id="user-avatar-file" onchange="handleAvatarChange(this,'user')">
+        </div>
       </div>
-      <div class="avatar-label">用户头像</div>
-      <input type="file" accept="image/*" class="avatar-file-input" id="user-avatar-file" onchange="handleAvatarChange(this,'user')">
     </div>
-  </div>
-</div>
 
-<div class="setting-section">
-  <div class="setting-section-title">主题颜色</div>
-  <div class="theme-colors">
-    <button class="theme-color-btn" style="background:#E8A4A4" data-theme="pink" onclick="selectTheme(this)"></button>
-    <button class="theme-color-btn" style="background:#C4A882" data-theme="sand" onclick="selectTheme(this)"></button>
-    <button class="theme-color-btn" style="background:#7FA8D4" data-theme="blue" onclick="selectTheme(this)"></button>
-    <button class="theme-color-btn selected" style="background:#9B8EC4" data-theme="purple" onclick="selectTheme(this)"></button>
-    <button class="theme-color-btn" style="background:#82B885" data-theme="green" onclick="selectTheme(this)"></button>
-    <button class="theme-color-btn" style="background:#4a4a6a" data-theme="dark" onclick="selectTheme(this)"></button>
-  </div>
-</div>
-
-<div class="setting-section">
-  <div class="setting-section-title">字体大小</div>
-  <input type="range" class="font-slider" id="font-slider" min="12" max="18" value="15" oninput="changeFontSize(this.value)">
-  <div class="font-preview" id="font-preview">预览文字大小 —— 15px</div>
-</div>
-
-<div class="setting-section">
-  <div class="setting-section-title">聊天记录</div>
-  <div style="display:flex;gap:10px;">
-    <div class="quick-btn" style="flex:1" onclick="uploadJsonFile()">
-      <span class="qb-icon">📂</span>上传 JSON 文件
+    <div class="setting-section">
+      <div class="setting-section-title">主题颜色</div>
+      <div class="theme-colors">
+        <button class="theme-color-btn" style="background:#E8A4A4" data-theme="pink" onclick="selectTheme(this)"></button>
+        <button class="theme-color-btn" style="background:#C4A882" data-theme="sand" onclick="selectTheme(this)"></button>
+        <button class="theme-color-btn" style="background:#7FA8D4" data-theme="blue" onclick="selectTheme(this)"></button>
+        <button class="theme-color-btn selected" style="background:#9B8EC4" data-theme="purple" onclick="selectTheme(this)"></button>
+        <button class="theme-color-btn" style="background:#82B885" data-theme="green" onclick="selectTheme(this)"></button>
+        <button class="theme-color-btn" style="background:#4a4a6a" data-theme="dark" onclick="selectTheme(this)"></button>
+      </div>
     </div>
-    <div class="quick-btn" style="flex:1;color:#e88;border-color:#e8a4a4" onclick="clearData()">
-      <span class="qb-icon">🗑</span>清除数据
+
+    <div class="setting-section">
+      <div class="setting-section-title">聊天背景</div>
+      <div class="chat-bg-selector">
+        <div class="chat-bg-opt selected" data-bg="none" onclick="selectChatBg(this)" title="无背景"> </div>
+        <div class="chat-bg-opt chat-bg-opt-dots" data-bg="dots" onclick="selectChatBg(this)"></div>
+        <div class="chat-bg-opt chat-bg-opt-grid" data-bg="grid" onclick="selectChatBg(this)"></div>
+        <div class="chat-bg-opt chat-bg-opt-lines" data-bg="lines" onclick="selectChatBg(this)"></div>
+        <div class="chat-bg-opt chat-bg-opt-img" data-bg="image" onclick="document.getElementById('bg-img-file').click()" title="自定义图片">🖼</div>
+      </div>
+      <input type="file" id="bg-img-file" accept="image/*" style="display:none" onchange="handleBgImage(this)">
     </div>
-  </div>
-</div>
 
-<button class="save-btn" onclick="saveSettings()">保存设置</button>
-<div style="height:20px"></div>
-```
+    <div class="setting-section">
+      <div class="setting-section-title">字体大小</div>
+      <input type="range" class="font-slider" id="font-slider" min="12" max="20" value="15" oninput="changeFontSize(this.value)">
+      <div class="font-preview" id="font-preview">预览文字大小 —— 15px</div>
+    </div>
 
+    <div class="setting-section">
+      <div class="setting-section-title">聊天记录</div>
+      <div style="display:flex;gap:10px;">
+        <div class="quick-btn" style="flex:1" onclick="uploadJsonFile()">
+          <span class="qb-icon">📂</span>上传 JSON
+        </div>
+        <div class="quick-btn" style="flex:1;color:#e88;border-color:#f0b4b4" onclick="clearData()">
+          <span class="qb-icon">🗑</span>清除数据
+        </div>
+      </div>
+    </div>
+
+    <button class="save-btn" onclick="saveSettings()">保存设置</button>
+    <div style="height:24px"></div>
   </div>
   <nav class="bottom-nav">
-    <button class="nav-item" onclick="switchNav('home', this)"><span class="nav-icon">🏡</span><span class="nav-label">花园</span></button>
-    <button class="nav-item" onclick="switchNav('conversations', this)"><span class="nav-icon">💬</span><span class="nav-label">对话</span></button>
-    <button class="nav-item" onclick="switchNav('timeline', this)"><span class="nav-icon">🗓</span><span class="nav-label">时间轴</span></button>
-    <button class="nav-item active" onclick="switchNav('settings', this)"><span class="nav-icon">⚙</span><span class="nav-label">设置</span></button>
+    <button class="nav-item" onclick="switchNav('home',this)"><span class="nav-icon">🏡</span><span class="nav-label">花园</span></button>
+    <button class="nav-item" onclick="switchNav('conversations',this)"><span class="nav-icon">💬</span><span class="nav-label">对话</span></button>
+    <button class="nav-item" onclick="switchNav('timeline',this)"><span class="nav-icon">🗓</span><span class="nav-label">时间轴</span></button>
+    <button class="nav-item active" onclick="switchNav('settings',this)"><span class="nav-icon">⚙️</span><span class="nav-label">设置</span></button>
   </nav>
 </div>
 
 <!-- Thinking sheet -->
-
 <div class="thinking-overlay" id="thinking-overlay" onclick="closeThinking()"></div>
 <div class="thinking-sheet" id="thinking-sheet">
   <div class="thinking-handle"></div>
   <div class="thinking-sheet-header">🧠 思考过程</div>
-  <div class="thinking-content" id="thinking-content" ontouchstart="handleThinkingSwipe(event)"></div>
+  <div class="thinking-content" id="thinking-content"></div>
 </div>
 
-<!-- Toast -->
-
 <div class="toast" id="toast"></div>
-
-<!-- File input -->
-
 <input type="file" id="json-file-input" accept=".json,application/json" style="display:none" onchange="handleJsonUpload(this)">
 
 <script>
 // ===== STATE =====
 let appData = {
   conversations: [],
-  aiName: 'AI',
-  userName: '用户',
-  theme: 'purple',
-  fontSize: 15,
-  aiAvatar: null,
-  userAvatar: null
+  aiName: 'AI', userName: '用户',
+  theme: 'purple', fontSize: 15,
+  aiAvatar: null, userAvatar: null,
+  chatBg: 'none', chatBgImage: null,
+  calYear: new Date().getFullYear(),
+  calMonth: new Date().getMonth()
 };
 let currentScreen = 'home';
 let prevScreen = 'home';
 let filteredConvs = [];
+let chatSearchMatches = [];
+let chatSearchIdx = 0;
 
 // ===== INIT =====
 window.onload = () => {
   loadFromStorage();
   applyTheme();
   applyAvatars();
+  applyChatBg();
   updateNameDisplays();
   document.getElementById('font-slider').value = appData.fontSize;
+  document.documentElement.style.setProperty('--font-size', appData.fontSize + 'px');
+  document.getElementById('font-preview').textContent = `预览文字大小 —— ${appData.fontSize}px`;
   document.getElementById('ai-name-input').value = appData.aiName;
   document.getElementById('user-name-input').value = appData.userName;
+  // select correct theme btn
+  document.querySelectorAll('.theme-color-btn').forEach(b => {
+    b.classList.toggle('selected', b.dataset.theme === appData.theme);
+  });
+  // select correct chat bg btn
+  document.querySelectorAll('.chat-bg-opt').forEach(b => {
+    b.classList.toggle('selected', b.dataset.bg === appData.chatBg);
+  });
   if (appData.conversations.length > 0) {
     showDataStats();
     renderConvList();
     renderTimeline();
+    renderCalendar();
   }
+  setupScrollbar();
   setupThinkingSwipe();
 };
 
 function loadFromStorage() {
   try {
-    const saved = localStorage.getItem('gardenApp');
-    if (saved) {
-      const d = JSON.parse(saved);
-      Object.assign(appData, d);
+    const saved = localStorage.getItem('gardenApp2');
+    if (saved) Object.assign(appData, JSON.parse(saved));
+    // init cal from data
+    if (appData.conversations.length) {
+      const dates = appData.conversations.map(c => c.created_at ? new Date(c.created_at) : null).filter(Boolean);
+      if (dates.length) {
+        const latest = new Date(Math.max(...dates));
+        appData.calYear = latest.getFullYear();
+        appData.calMonth = latest.getMonth();
+      }
     }
   } catch(e) {}
 }
 
 function saveToStorage() {
-  try { localStorage.setItem('gardenApp', JSON.stringify(appData)); } catch(e) {}
+  try { localStorage.setItem('gardenApp2', JSON.stringify(appData)); } catch(e) {}
 }
 
-// ===== NAVIGATION =====
+// ===== NAV =====
 function showScreen(id) {
   prevScreen = currentScreen;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -991,37 +935,65 @@ function showScreen(id) {
 
 function switchNav(id, btn) {
   showScreen(id);
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.querySelectorAll(`#${id} .nav-item`).forEach(n => {
-    if (n === btn || (btn && n.onclick && n.onclick.toString().includes(`'${id}'`))) {}
-  });
-  // highlight all matching nav items across screens
   document.querySelectorAll('.nav-item').forEach(n => {
-    if (n.onclick && n.onclick.toString().includes(`switchNav('${id}'`)) n.classList.add('active');
-    else n.classList.remove('active');
+    n.classList.toggle('active', n === btn || (n.onclick && n.onclick.toString().includes(`'${id}'`)));
   });
 }
 
 function goBack() {
-  showScreen(prevScreen === 'chat' ? 'conversations' : prevScreen);
+  showScreen(prevScreen === 'chat' ? 'conversations' : (prevScreen || 'conversations'));
 }
 
 // ===== THEME =====
-function applyTheme(t) {
-  const theme = t || appData.theme;
+function applyTheme() {
   document.body.removeAttribute('data-theme');
-  if (theme !== 'purple') document.body.setAttribute('data-theme', theme);
+  if (appData.theme !== 'purple') document.body.setAttribute('data-theme', appData.theme);
 }
 
 function selectTheme(btn) {
   document.querySelectorAll('.theme-color-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
-  const theme = btn.getAttribute('data-theme');
-  appData.theme = theme;
-  applyTheme(theme);
+  appData.theme = btn.dataset.theme;
+  applyTheme();
+  if (appData.conversations.length) renderCalendar();
 }
 
-// ===== FONT SIZE =====
+// ===== CHAT BACKGROUND =====
+function applyChatBg() {
+  const wrap = document.getElementById('chat-body-wrap');
+  if (!wrap) return;
+  wrap.className = 'chat-body-wrap';
+  if (appData.chatBg === 'dots') wrap.classList.add('chat-bg-dots');
+  else if (appData.chatBg === 'grid') wrap.classList.add('chat-bg-grid');
+  else if (appData.chatBg === 'lines') wrap.classList.add('chat-bg-lines');
+  else if (appData.chatBg === 'image' && appData.chatBgImage) {
+    wrap.style.backgroundImage = `url(${appData.chatBgImage})`;
+    wrap.classList.add('chat-bg-image');
+  }
+  if (appData.chatBg !== 'image') wrap.style.backgroundImage = '';
+}
+
+function selectChatBg(btn) {
+  document.querySelectorAll('.chat-bg-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  appData.chatBg = btn.dataset.bg;
+  if (appData.chatBg !== 'image') applyChatBg();
+}
+
+function handleBgImage(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    appData.chatBgImage = e.target.result;
+    appData.chatBg = 'image';
+    document.querySelectorAll('.chat-bg-opt').forEach(b => b.classList.toggle('selected', b.dataset.bg === 'image'));
+    applyChatBg();
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+// ===== FONT =====
 function changeFontSize(val) {
   document.documentElement.style.setProperty('--font-size', val + 'px');
   document.getElementById('font-preview').textContent = `预览文字大小 —— ${val}px`;
@@ -1030,37 +1002,24 @@ function changeFontSize(val) {
 
 // ===== AVATARS =====
 function handleAvatarChange(input, who) {
-  const file = input.files[0];
-  if (!file) return;
+  const file = input.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = e => {
-    const data = e.target.result;
-    appData[who + 'Avatar'] = data;
-    applyAvatars();
-  };
+  reader.onload = e => { appData[who + 'Avatar'] = e.target.result; applyAvatars(); };
   reader.readAsDataURL(file);
 }
 
 function applyAvatars() {
-  const aiPreview = document.getElementById('ai-avatar-preview');
-  const userPreview = document.getElementById('user-avatar-preview');
-  if (appData.aiAvatar) {
-    aiPreview.innerHTML = `<img src="${appData.aiAvatar}"><div class="edit-overlay">✏</div>`;
-  }
-  if (appData.userAvatar) {
-    userPreview.innerHTML = `<img src="${appData.userAvatar}"><div class="edit-overlay">✏</div>`;
-  }
-  // home page avatars
-  const homeAi = document.getElementById('home-ai-avatar');
-  const homeUser = document.getElementById('home-user-avatar');
-  if (homeAi) {
-    if (appData.aiAvatar) homeAi.innerHTML = `<img src="${appData.aiAvatar}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`;
-    else homeAi.textContent = '🤖';
-  }
-  if (homeUser) {
-    if (appData.userAvatar) homeUser.innerHTML = `<img src="${appData.userAvatar}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`;
-    else homeUser.textContent = '🌸';
-  }
+  const setAvatar = (elId, data, fallback) => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    if (data) el.innerHTML = `<img src="${data}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+    else el.innerHTML = fallback;
+    el.style.overflow = 'hidden';
+  };
+  setAvatar('ai-avatar-preview', appData.aiAvatar, '🤖');
+  setAvatar('user-avatar-preview', appData.userAvatar, '🌸');
+  setAvatar('home-ai-avatar', appData.aiAvatar, '🤖');
+  setAvatar('home-user-avatar', appData.userAvatar, '🌸');
 }
 
 function updateNameDisplays() {
@@ -1070,7 +1029,7 @@ function updateNameDisplays() {
   document.getElementById('home-user-name').textContent = appData.userName;
 }
 
-// ===== SETTINGS SAVE =====
+// ===== SAVE SETTINGS =====
 function saveSettings() {
   appData.aiName = document.getElementById('ai-name-input').value || 'AI';
   appData.userName = document.getElementById('user-name-input').value || '用户';
@@ -1079,19 +1038,15 @@ function saveSettings() {
   showToast('设置已保存 ✨');
 }
 
-// ===== FILE UPLOAD =====
-function uploadJsonFile() {
-  document.getElementById('json-file-input').click();
-}
+// ===== UPLOAD =====
+function uploadJsonFile() { document.getElementById('json-file-input').click(); }
 
 function handleJsonUpload(input) {
-  const file = input.files[0];
-  if (!file) return;
+  const file = input.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
     try {
-      const data = JSON.parse(e.target.result);
-      parseClaudeExport(data);
+      parseClaudeExport(JSON.parse(e.target.result));
       showToast('聊天记录加载成功 🌸');
     } catch(err) {
       showToast('文件格式有误，请使用 Claude 导出的 JSON');
@@ -1101,78 +1056,79 @@ function handleJsonUpload(input) {
   input.value = '';
 }
 
+// ===== PARSE =====
+function cleanTitle(t) {
+  return (t || '未命名对话')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/#+\s*/g, '')
+    .replace(/[_~]/g, '')
+    .trim() || '未命名对话';
+}
+
 function parseClaudeExport(data) {
-  // Support multiple Claude export formats
-  let convs = [];
-  
-  if (Array.isArray(data)) {
-    convs = data;
-  } else if (data.conversations) {
-    convs = data.conversations;
-  } else if (data.chats) {
-    convs = data.chats;
-  }
+  let raw = Array.isArray(data) ? data : (data.conversations || data.chats || []);
 
-  appData.conversations = convs.map(conv => {
-    const messages = (conv.chat_messages || conv.messages || []).map(msg => {
-      // Get role
+  const mapped = raw.map((conv, idx) => {
+    const rawMsgs = conv.chat_messages || conv.messages || [];
+    const messages = rawMsgs.map(msg => {
       let role = msg.sender || msg.role || 'human';
-      if (role === 'human' || role === 'user') role = 'user';
-      else role = 'assistant';
+      role = (role === 'human' || role === 'user') ? 'user' : 'assistant';
+      let content = '', thinking = '';
+      if (typeof msg.content === 'string') content = msg.content;
+      else if (Array.isArray(msg.content)) {
+        const txtBlocks = msg.content.filter(b => b.type === 'text');
+        const thinkBlocks = msg.content.filter(b => b.type === 'thinking');
+        content = txtBlocks.length ? txtBlocks[txtBlocks.length - 1].text : '';
+        thinking = thinkBlocks.map(b => b.thinking || b.text || '').join('\n\n');
+      } else if (msg.text) content = msg.text;
+      return { role, content: content.trim(), thinking, created_at: msg.created_at || msg.timestamp || null };
+    }).filter(m => m.content || m.thinking);
 
-      // Get content - handle array content (with thinking blocks)
-      let content = '';
-      let thinking = '';
-      
-      if (typeof msg.content === 'string') {
-        content = msg.content;
-      } else if (Array.isArray(msg.content)) {
-        // Find last text block and any thinking blocks
-        const textBlocks = msg.content.filter(b => b.type === 'text');
-        const thinkingBlocks = msg.content.filter(b => b.type === 'thinking');
-        content = textBlocks.length ? textBlocks[textBlocks.length - 1].text : '';
-        thinking = thinkingBlocks.map(b => b.thinking || b.text || '').join('\n\n');
-      } else if (msg.text) {
-        content = msg.text;
-      }
-
-      // Handle files/attachments
-      let attachments = [];
-      if (msg.attachments && msg.attachments.length) {
-        attachments = msg.attachments.map(a => a.file_name || a.name || '附件');
-      }
-
-      return {
-        role,
-        content,
-        thinking,
-        attachments,
-        created_at: msg.created_at || msg.timestamp || null
-      };
-    });
-
+    const charCount = messages.reduce((s, m) => s + m.content.length, 0);
     return {
-      id: conv.uuid || conv.id || Math.random().toString(36),
-      title: conv.name || conv.title || '未命名对话',
+      id: conv.uuid || conv.id || `conv_${idx}`,
+      title: cleanTitle(conv.name || conv.title),
       created_at: conv.created_at || conv.timestamp || null,
       updated_at: conv.updated_at || null,
-      messages
+      messages,
+      msgCount: messages.length,
+      charCount
     };
-  });
+  }).filter(c => !(c.msgCount === 0 && c.charCount === 0)); // filter invalid
 
-  appData.conversations.sort((a, b) => {
+  // Sort by date desc
+  mapped.sort((a, b) => {
     const da = a.created_at ? new Date(a.created_at) : 0;
     const db = b.created_at ? new Date(b.created_at) : 0;
     return db - da;
   });
 
-  filteredConvs = [...appData.conversations];
+  // Number valid conversations
+  const dated = [...mapped].sort((a,b) => {
+    const da = a.created_at ? new Date(a.created_at) : 0;
+    const db = b.created_at ? new Date(b.created_at) : 0;
+    return da - db;
+  });
+  dated.forEach((c, i) => c.seqNum = i + 1);
+
+  appData.conversations = mapped;
+  filteredConvs = [...mapped];
+
+  // Set calendar to latest date
+  const dates = mapped.map(c => c.created_at ? new Date(c.created_at) : null).filter(Boolean);
+  if (dates.length) {
+    const latest = new Date(Math.max(...dates));
+    appData.calYear = latest.getFullYear();
+    appData.calMonth = latest.getMonth();
+  }
+
   saveToStorage();
   showDataStats();
   renderConvList();
   renderTimeline();
-
-  // Hide upload prompt, show stats
+  renderCalendar();
   document.getElementById('upload-prompt').style.display = 'none';
   document.getElementById('stats-content').style.display = 'block';
 }
@@ -1186,17 +1142,15 @@ function showDataStats() {
   const allMsgs = appData.conversations.flatMap(c => c.messages);
   const aiMsgs = allMsgs.filter(m => m.role === 'assistant');
   const userMsgs = allMsgs.filter(m => m.role === 'user');
-  
-  const aiChars = aiMsgs.reduce((s, m) => s + (m.content || '').length, 0);
-  const userChars = userMsgs.reduce((s, m) => s + (m.content || '').length, 0);
+  const aiChars = aiMsgs.reduce((s,m) => s + m.content.length, 0);
+  const userChars = userMsgs.reduce((s,m) => s + m.content.length, 0);
 
-  // Date range
-  const dates = appData.conversations.map(c => c.created_at ? new Date(c.created_at) : null).filter(Boolean);
-  const updatedDates = appData.conversations.map(c => c.updated_at ? new Date(c.updated_at) : null).filter(Boolean);
-  const allDates = [...dates, ...updatedDates].filter(Boolean);
-  
-  let dateText = '';
-  let dayCount = '—';
+  const allDates = [
+    ...appData.conversations.map(c => c.created_at ? new Date(c.created_at) : null),
+    ...appData.conversations.map(c => c.updated_at ? new Date(c.updated_at) : null)
+  ].filter(Boolean);
+
+  let dateText = '', dayCount = '—';
   if (allDates.length >= 2) {
     const minD = new Date(Math.min(...allDates));
     const maxD = new Date(Math.max(...allDates));
@@ -1205,39 +1159,30 @@ function showDataStats() {
     dateText = `我们从 <span class="highlight">${fmtDate(minD)}</span> 聊到 <span class="highlight">${fmtDate(maxD)}</span>，共同走过了 <span class="highlight">${days}</span> 天。<br>`;
   }
 
-  // Active days
-  const activeDaysSet = new Set(appData.conversations.map(c => c.created_at ? c.created_at.slice(0,10) : null).filter(Boolean));
+  const activeDaysSet = new Set(appData.conversations.map(c => c.created_at?.slice(0,10)).filter(Boolean));
   const activeDays = activeDaysSet.size || appData.conversations.length;
-
-  // Avg chars per active day
   const totalChars = aiChars + userChars;
-  const avgPerDay = activeDays ? Math.round(totalChars / activeDays) : 0;
 
-  // Favorite time
+  // Peak hour
   const hourCounts = new Array(24).fill(0);
-  allMsgs.forEach(m => {
-    if (m.created_at) {
-      const h = new Date(m.created_at).getHours();
-      hourCounts[h]++;
-    }
-  });
+  allMsgs.forEach(m => { if (m.created_at) hourCounts[new Date(m.created_at).getHours()]++; });
   const maxHour = hourCounts.indexOf(Math.max(...hourCounts));
-  const favoriteTime = `${String(maxHour).padStart(2,'0')}:00–${String((maxHour+3)%24).padStart(2,'0')}:00`;
-  const timePercent = allMsgs.length ? Math.round(hourCounts.slice(maxHour, maxHour+3).reduce((a,b)=>a+b,0)/allMsgs.length*100) : 0;
+  const timeRange = `${String(maxHour).padStart(2,'0')}:00–${String((maxHour+3)%24).padStart(2,'0')}:00`;
+  const tPct = allMsgs.length ? Math.round(hourCounts.slice(maxHour, maxHour+3).reduce((a,b)=>a+b,0)/allMsgs.length*100) : 0;
 
-  // Max streak
-  const sortedDates = [...activeDaysSet].sort();
-  let maxStreak = 1, curStreak = 1;
-  for (let i = 1; i < sortedDates.length; i++) {
-    const diff = (new Date(sortedDates[i]) - new Date(sortedDates[i-1])) / 86400000;
-    if (diff === 1) { curStreak++; maxStreak = Math.max(maxStreak, curStreak); } else curStreak = 1;
+  // Streak
+  const sortedDays = [...activeDaysSet].sort();
+  let maxStreak = 1, cur = 1;
+  for (let i = 1; i < sortedDays.length; i++) {
+    const diff = (new Date(sortedDays[i]) - new Date(sortedDays[i-1])) / 86400000;
+    if (diff === 1) { cur++; maxStreak = Math.max(maxStreak, cur); } else cur = 1;
   }
 
-  document.getElementById('main-stats-text').innerHTML = 
+  document.getElementById('main-stats-text').innerHTML =
     dateText +
-    `这期间，有 <span class="highlight">${activeDays}</span> 天都有我们的对话，每个活跃日平均要说上 <span class="highlight">${avgPerDay.toLocaleString()}</span> 字。<br>` +
-    (allMsgs.some(m=>m.created_at) ? `我们最喜欢在 <span class="highlight">${favoriteTime}</span> 谈话，那段时光占据了所有对话的 <span class="highlight">${timePercent}%</span>。<br>` : '') +
-    `最长的一次，我们连续聊了 <span class="highlight">${maxStreak}</span> 天都没有停下。`;
+    `这期间，有 <span class="highlight">${activeDays}</span> 天都有我们的对话，每个活跃日平均说上 <span class="highlight">${Math.round(totalChars/activeDays).toLocaleString()}</span> 字。<br>` +
+    (allMsgs.some(m => m.created_at) ? `我们最喜欢在 <span class="highlight">${timeRange}</span> 谈话，占所有对话的 <span class="highlight">${tPct}%</span>。<br>` : '') +
+    `最长连续聊了 <span class="highlight">${maxStreak}</span> 天。`;
 
   document.getElementById('stat-days').textContent = dayCount;
   document.getElementById('stat-convs').textContent = appData.conversations.length;
@@ -1248,28 +1193,98 @@ function showDataStats() {
   document.getElementById('user-total-chars').textContent = fmtNum(userChars) + ' 字';
   document.getElementById('user-total-msgs').textContent = fmtNum(userMsgs.length) + ' 条';
   document.getElementById('user-avg-chars').textContent = fmtNum(userMsgs.length ? Math.round(userChars/userMsgs.length) : 0) + ' 字';
-
   applyAvatars();
 }
 
-// ===== CONVERSATIONS LIST =====
+// ===== CALENDAR =====
+function buildChatDayMap() {
+  const map = {};
+  appData.conversations.forEach(c => {
+    const d = (c.updated_at || c.created_at || '').slice(0,10);
+    if (d) map[d] = (map[d] || 0) + c.msgCount;
+  });
+  return map;
+}
+
+function renderCalendar() {
+  const { calYear: yr, calMonth: mo } = appData;
+  document.getElementById('cal-month-label').textContent = `${yr}年${mo+1}月`;
+  const dayMap = buildChatDayMap();
+  const today = new Date();
+  const firstDay = new Date(yr, mo, 1).getDay();
+  const daysInMonth = new Date(yr, mo+1, 0).getDate();
+  const maxVal = Math.max(...Object.values(dayMap), 1);
+
+  let html = '';
+  for (let i = 0; i < firstDay; i++) html += '<div class="cal-day empty"></div>';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const key = `${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const count = dayMap[key] || 0;
+    const isToday = today.getFullYear()===yr && today.getMonth()===mo && today.getDate()===d;
+    let cls = 'cal-day';
+    if (count > 0) cls += count >= maxVal * 0.5 ? ' has-chat' : ' light-chat';
+    if (isToday) cls += ' today';
+    const onclick = count > 0 ? `onclick="calDayClick('${key}')"` : '';
+    html += `<div class="${cls}" ${onclick}>${d}</div>`;
+  }
+  document.getElementById('cal-days').innerHTML = html;
+}
+
+function calPrev() {
+  appData.calMonth--;
+  if (appData.calMonth < 0) { appData.calMonth = 11; appData.calYear--; }
+  renderCalendar();
+}
+function calNext() {
+  appData.calMonth++;
+  if (appData.calMonth > 11) { appData.calMonth = 0; appData.calYear++; }
+  renderCalendar();
+}
+function calDayClick(dateKey) {
+  const matches = appData.conversations.filter(c => {
+    const d = (c.updated_at || c.created_at || '').slice(0,10);
+    return d === dateKey;
+  });
+  if (matches.length === 1) { openConv(matches[0].id); return; }
+  if (matches.length > 1) {
+    showScreen('conversations');
+    document.getElementById('search-input').value = dateKey.slice(0,10);
+    filterByDate(dateKey);
+  }
+}
+
+function filterByDate(dateKey) {
+  filteredConvs = appData.conversations.filter(c => {
+    const d = (c.updated_at || c.created_at || '').slice(0,10);
+    return d === dateKey;
+  });
+  renderConvList();
+}
+
+// ===== CONVERSATIONS =====
 function renderConvList(convs) {
-  const list = convs || filteredConvs || appData.conversations;
+  const list = convs !== undefined ? convs : filteredConvs;
   const el = document.getElementById('conv-list');
+  document.getElementById('conv-count').textContent = list.length ? `共 ${list.length} 个对话` : '';
   if (!list.length) {
-    el.innerHTML = '<div class="empty-state"><span class="empty-icon">🌱</span>暂无聊天记录<br><span style="font-size:12px;margin-top:6px;display:block">请先上传 JSON 文件</span></div>';
+    el.innerHTML = '<div class="empty-state"><span class="empty-icon">🌱</span>暂无匹配对话</div>';
     return;
   }
-  el.innerHTML = list.map((conv, i) => {
-    const msgCount = conv.messages.length;
-    const date = conv.created_at ? fmtDate(new Date(conv.created_at)) : '未知日期';
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  el.innerHTML = list.map(conv => {
+    const date = fmtDate2(conv.updated_at || conv.created_at);
+    let titleHtml = escHtml(conv.title);
+    if (q && conv.title.toLowerCase().includes(q)) {
+      titleHtml = escHtml(conv.title).replace(new RegExp(escRegex(escHtml(q)), 'gi'), m => `<mark>${m}</mark>`);
+    }
     return `<div class="conv-item" onclick="openConv('${conv.id}')">
-      <span class="conv-icon">💬</span>
+      <span class="conv-num">#${conv.seqNum||'?'}</span>
       <div class="conv-info">
-        <div class="conv-title">${escHtml(conv.title)}</div>
-        <div class="conv-meta">${date} · ${msgCount} 条消息</div>
+        <div class="conv-title">${titleHtml}</div>
+        <div class="conv-meta">${date}</div>
+        <div class="conv-meta-detail">${conv.msgCount} 条消息 | ${fmtNum(conv.charCount)} 字符</div>
       </div>
-      <div class="conv-badge">${msgCount}</div>
+      <span class="conv-arrow">›</span>
     </div>`;
   }).join('');
 }
@@ -1277,31 +1292,50 @@ function renderConvList(convs) {
 function filterConvs(type, btn) {
   document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  if (type === 'all') {
-    filteredConvs = [...appData.conversations];
-  } else {
-    const cutoff = new Date(Date.now() - 7 * 86400000);
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear-btn').classList.remove('visible');
+  if (type === 'all') filteredConvs = [...appData.conversations];
+  else if (type === 'recent') {
+    const cutoff = Date.now() - 7*86400000;
     filteredConvs = appData.conversations.filter(c => c.created_at && new Date(c.created_at) > cutoff);
+  } else if (type === 'month') {
+    const now = new Date();
+    filteredConvs = appData.conversations.filter(c => {
+      if (!c.created_at) return false;
+      const d = new Date(c.created_at);
+      return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+    });
   }
   renderConvList();
 }
 
-function searchConvs(query) {
-  const q = query.toLowerCase().trim();
-  if (!q) { filteredConvs = [...appData.conversations]; }
-  else { filteredConvs = appData.conversations.filter(c => c.title.toLowerCase().includes(q)); }
+function searchConvs(q) {
+  const clr = document.getElementById('search-clear-btn');
+  clr.classList.toggle('visible', q.length > 0);
+  if (!q.trim()) { filteredConvs = [...appData.conversations]; }
+  else {
+    const lq = q.toLowerCase();
+    filteredConvs = appData.conversations.filter(c => c.title.toLowerCase().includes(lq));
+  }
   renderConvList();
 }
 
-// ===== CHAT VIEW =====
+function clearSearch() {
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear-btn').classList.remove('visible');
+  filteredConvs = [...appData.conversations];
+  renderConvList();
+}
+
+// ===== CHAT =====
 function openConv(id) {
   const conv = appData.conversations.find(c => c.id === id);
   if (!conv) return;
   document.getElementById('chat-title').textContent = conv.title;
-  
   const body = document.getElementById('chat-body');
   body.innerHTML = '';
-  
+  chatSearchMatches = []; chatSearchIdx = 0;
+
   let lastDate = '';
   conv.messages.forEach(msg => {
     if (msg.created_at) {
@@ -1314,23 +1348,21 @@ function openConv(id) {
         body.appendChild(sep);
       }
     }
-    
     if (!msg.content && !msg.thinking) return;
-    
+
     const isAi = msg.role === 'assistant';
     const wrapper = document.createElement('div');
     wrapper.className = `msg-wrapper ${isAi ? 'ai' : 'user'}`;
-    
+
     const avatarSrc = isAi ? appData.aiAvatar : appData.userAvatar;
     const avatarFallback = isAi ? '🤖' : '🌸';
-    const avatarHtml = avatarSrc 
-      ? `<img class="msg-avatar" src="${avatarSrc}" alt="">` 
+    const avatarEl = avatarSrc
+      ? `<img class="msg-avatar" src="${avatarSrc}" alt="">`
       : `<div class="msg-avatar">${avatarFallback}</div>`;
-    
+
     const bubbleWrap = document.createElement('div');
     bubbleWrap.className = 'msg-bubble-wrap';
-    
-    // Thinking button
+
     if (msg.thinking && isAi) {
       const thinkBtn = document.createElement('button');
       thinkBtn.className = 'thinking-btn';
@@ -1339,27 +1371,137 @@ function openConv(id) {
       thinkBtn.onclick = () => openThinking(t);
       bubbleWrap.appendChild(thinkBtn);
     }
-    
+
     const bubble = document.createElement('div');
     bubble.className = 'msg-bubble';
     bubble.textContent = msg.content;
     bubbleWrap.appendChild(bubble);
-    
+
     if (msg.created_at) {
       const time = document.createElement('div');
       time.className = 'msg-time';
       time.textContent = fmtTime(new Date(msg.created_at));
       bubbleWrap.appendChild(time);
     }
-    
-    wrapper.innerHTML = avatarHtml;
+
+    wrapper.innerHTML = avatarEl;
     wrapper.appendChild(bubbleWrap);
     body.appendChild(wrapper);
   });
-  
+
   showScreen('chat');
   prevScreen = 'conversations';
-  setTimeout(() => { body.scrollTop = body.scrollHeight; }, 50);
+  applyChatBg();
+  updateScrollbar();
+  setTimeout(() => { body.scrollTop = body.scrollHeight; updateScrollbar(); }, 60);
+  body.addEventListener('scroll', updateScrollbar);
+}
+
+// ===== CHAT SEARCH =====
+function toggleChatSearch() {
+  const bar = document.getElementById('chat-search-bar');
+  const isVis = bar.classList.contains('visible');
+  bar.classList.toggle('visible', !isVis);
+  if (!isVis) document.getElementById('chat-search-input').focus();
+  else closeChatSearch();
+}
+
+function closeChatSearch() {
+  document.getElementById('chat-search-bar').classList.remove('visible');
+  document.getElementById('chat-search-input').value = '';
+  clearChatSearchHighlights();
+  chatSearchMatches = []; chatSearchIdx = 0;
+  document.getElementById('chat-search-info').textContent = '';
+}
+
+function chatSearch(q) {
+  clearChatSearchHighlights();
+  chatSearchMatches = []; chatSearchIdx = 0;
+  if (!q.trim()) { document.getElementById('chat-search-info').textContent = ''; return; }
+
+  const body = document.getElementById('chat-body');
+  const bubbles = body.querySelectorAll('.msg-bubble');
+  bubbles.forEach(bubble => {
+    const text = bubble.textContent;
+    const lq = q.toLowerCase();
+    if (text.toLowerCase().includes(lq)) {
+      const re = new RegExp(escRegex(q), 'gi');
+      bubble.innerHTML = escHtml(text).replace(re, m => `<mark>${m}</mark>`);
+      const marks = bubble.querySelectorAll('mark');
+      marks.forEach(m => chatSearchMatches.push(m));
+    }
+  });
+
+  if (chatSearchMatches.length > 0) {
+    document.getElementById('chat-search-info').textContent = `1 / ${chatSearchMatches.length}`;
+    chatSearchMatches[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else {
+    document.getElementById('chat-search-info').textContent = '无结果';
+  }
+}
+
+function clearChatSearchHighlights() {
+  document.querySelectorAll('#chat-body .msg-bubble mark').forEach(m => {
+    const parent = m.parentNode;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
+  });
+}
+
+function chatSearchPrev() {
+  if (!chatSearchMatches.length) return;
+  chatSearchIdx = (chatSearchIdx - 1 + chatSearchMatches.length) % chatSearchMatches.length;
+  chatSearchMatches[chatSearchIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('chat-search-info').textContent = `${chatSearchIdx+1} / ${chatSearchMatches.length}`;
+}
+function chatSearchNext() {
+  if (!chatSearchMatches.length) return;
+  chatSearchIdx = (chatSearchIdx + 1) % chatSearchMatches.length;
+  chatSearchMatches[chatSearchIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('chat-search-info').textContent = `${chatSearchIdx+1} / ${chatSearchMatches.length}`;
+}
+
+// ===== SCROLLBAR =====
+function setupScrollbar() {
+  const body = document.getElementById('chat-body');
+  if (body) body.addEventListener('scroll', updateScrollbar);
+}
+
+function updateScrollbar() {
+  const body = document.getElementById('chat-body');
+  const thumb = document.getElementById('chat-scrollbar-thumb');
+  const track = document.getElementById('chat-scrollbar-track');
+  if (!body || !thumb || !track) return;
+  const ratio = body.scrollHeight > body.clientHeight ? body.clientHeight / body.scrollHeight : 1;
+  const thumbH = Math.max(ratio * track.clientHeight, 28);
+  const thumbTop = ratio < 1 ? (body.scrollTop / (body.scrollHeight - body.clientHeight)) * (track.clientHeight - thumbH) : 0;
+  thumb.style.height = thumbH + 'px';
+  thumb.style.top = thumbTop + 'px';
+}
+
+let isDraggingScrollbar = false, dragStartY = 0, dragStartScroll = 0;
+function startScrollbarDrag(e) {
+  e.preventDefault();
+  isDraggingScrollbar = true;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  dragStartY = clientY;
+  const body = document.getElementById('chat-body');
+  dragStartScroll = body.scrollTop;
+  const onMove = ev => {
+    if (!isDraggingScrollbar) return;
+    const cy = ev.touches ? ev.touches[0].clientY : ev.clientY;
+    const body2 = document.getElementById('chat-body');
+    const track = document.getElementById('chat-scrollbar-track');
+    const ratio = body2.clientHeight / body2.scrollHeight;
+    const delta = (cy - dragStartY) / (track.clientHeight * ratio);
+    body2.scrollTop = dragStartScroll + delta * (body2.scrollHeight - body2.clientHeight);
+    updateScrollbar();
+  };
+  const onUp = () => { isDraggingScrollbar = false; document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); document.removeEventListener('touchmove', onMove); document.removeEventListener('touchend', onUp); };
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+  document.addEventListener('touchmove', onMove, {passive:false});
+  document.addEventListener('touchend', onUp);
 }
 
 // ===== THINKING =====
@@ -1368,101 +1510,108 @@ function openThinking(text) {
   document.getElementById('thinking-sheet').classList.add('open');
   document.getElementById('thinking-overlay').classList.add('show');
 }
-
 function closeThinking() {
   document.getElementById('thinking-sheet').classList.remove('open');
   document.getElementById('thinking-overlay').classList.remove('show');
 }
-
-let touchStartY = 0;
 function setupThinkingSwipe() {
   const sheet = document.getElementById('thinking-sheet');
-  sheet.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, {passive:true});
-  sheet.addEventListener('touchend', e => {
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (dy > 60) closeThinking();
-  }, {passive:true});
+  let ty0 = 0;
+  sheet.addEventListener('touchstart', e => { ty0 = e.touches[0].clientY; }, {passive:true});
+  sheet.addEventListener('touchend', e => { if (e.changedTouches[0].clientY - ty0 > 55) closeThinking(); }, {passive:true});
 }
-
-function handleThinkingSwipe(e) {} // handled by setupThinkingSwipe
 
 // ===== TIMELINE =====
 function renderTimeline() {
   const el = document.getElementById('timeline-body');
   if (!appData.conversations.length) return;
-  
-  const sorted = [...appData.conversations].sort((a, b) => {
+
+  const sorted = [...appData.conversations].sort((a,b) => {
     const da = a.created_at ? new Date(a.created_at) : 0;
     const db = b.created_at ? new Date(b.created_at) : 0;
     return da - db;
   });
 
-  const dates = sorted.map(c => c.created_at ? new Date(c.created_at) : null).filter(Boolean);
-  const updDates = sorted.map(c => c.updated_at ? new Date(c.updated_at) : null).filter(Boolean);
-  const allD = [...dates, ...updDates].filter(Boolean);
-  
+  const allDates = [
+    ...appData.conversations.map(c => c.created_at ? new Date(c.created_at) : null),
+    ...appData.conversations.map(c => c.updated_at ? new Date(c.updated_at) : null)
+  ].filter(Boolean);
+
   let statsHtml = '';
-  if (allD.length >= 2) {
-    const minD = new Date(Math.min(...allD));
-    const maxD = new Date(Math.max(...allD));
+  if (allDates.length >= 2) {
+    const minD = new Date(Math.min(...allDates));
+    const maxD = new Date(Math.max(...allDates));
     const days = Math.round((maxD - minD) / 86400000) + 1;
     const allMsgs = appData.conversations.flatMap(c => c.messages);
-    const totalChars = allMsgs.reduce((s, m) => s + (m.content||'').length, 0);
+    const totalChars = allMsgs.reduce((s,m) => s + m.content.length, 0);
     const activeDays = new Set(appData.conversations.map(c => c.created_at?.slice(0,10)).filter(Boolean)).size;
+
+    // Hour distribution
+    const hourCounts = new Array(24).fill(0);
+    allMsgs.forEach(m => { if (m.created_at) hourCounts[new Date(m.created_at).getHours()]++; });
+    const maxH = Math.max(...hourCounts);
+    const peakHour = hourCounts.indexOf(maxH);
+    const peakLabel = `${String(peakHour).padStart(2,'0')}:00`;
+    const barsHtml = hourCounts.map((c,i) => {
+      const h = maxH > 0 ? Math.max((c/maxH)*36, 2) : 2;
+      const isPeak = i === peakHour;
+      return `<div class="hour-bar${isPeak?' peak':''}" style="height:${h}px" title="${i}:00 - ${c}条"></div>`;
+    }).join('');
+
     statsHtml = `<div class="timeline-stats">
       <span class="highlight">${fmtDate(minD)}</span> → <span class="highlight">${fmtDate(maxD)}</span><br>
-      共同走过 <span class="highlight">${days}</span> 天<br>
+      共同走过 <span class="highlight">${days}</span> 天 · 有聊天记录 <span class="highlight">${activeDays}</span> 天
       <div class="tl-divider"></div>
-      有对话的天数 <span class="highlight">${activeDays}</span> 天<br>
+      最喜欢聊天的时段：<span class="highlight">${peakLabel}</span> 前后<br>
+      <div class="hour-chart">
+        <div class="hour-bars">${barsHtml}</div>
+        <div class="hour-labels"><span class="hour-label">0:00</span><span class="hour-label">6:00</span><span class="hour-label">12:00</span><span class="hour-label">18:00</span><span class="hour-label">23:00</span></div>
+      </div>
+      <div class="tl-divider"></div>
       平均每天 <span class="highlight">${Math.round(totalChars/activeDays).toLocaleString()}</span> 字
     </div>`;
   }
 
   el.innerHTML = statsHtml + '<div class="tl-items">' + sorted.map(conv => {
-    const date = conv.created_at ? fmtDate(new Date(conv.created_at)) : '未知日期';
-    const chars = conv.messages.reduce((s,m) => s + (m.content||'').length, 0);
+    const date = fmtDate2(conv.updated_at || conv.created_at);
     return `<div class="tl-item" onclick="openConv('${conv.id}')">
       <div class="tl-date">${date}</div>
       <div class="tl-conv-title">${escHtml(conv.title)}</div>
-      <div class="tl-conv-meta">${conv.messages.length} 条消息 · ${fmtNum(chars)} 字</div>
+      <div class="tl-conv-meta">${conv.msgCount} 条消息 · ${fmtNum(conv.charCount)} 字</div>
     </div>`;
   }).join('') + '</div>';
 }
 
-// ===== CLEAR DATA =====
+// ===== CLEAR =====
 function clearData() {
-  if (confirm('确定要清除所有聊天记录吗？')) {
-    appData.conversations = [];
-    filteredConvs = [];
-    saveToStorage();
-    document.getElementById('upload-prompt').style.display = 'block';
-    document.getElementById('stats-content').style.display = 'none';
-    document.getElementById('conv-list').innerHTML = '<div class="empty-state"><span class="empty-icon">🌱</span>暂无聊天记录</div>';
-    document.getElementById('timeline-body').innerHTML = '<div class="empty-state"><span class="empty-icon">🌿</span>暂无数据</div>';
-    showToast('数据已清除');
-  }
+  if (!confirm('确定要清除所有聊天记录吗？')) return;
+  appData.conversations = [];
+  filteredConvs = [];
+  saveToStorage();
+  document.getElementById('upload-prompt').style.display = 'block';
+  document.getElementById('stats-content').style.display = 'none';
+  document.getElementById('conv-list').innerHTML = '<div class="empty-state"><span class="empty-icon">🌱</span>暂无聊天记录</div>';
+  document.getElementById('timeline-body').innerHTML = '<div class="empty-state"><span class="empty-icon">🌿</span>暂无数据</div>';
+  showToast('数据已清除');
 }
 
 // ===== UTILS =====
-function fmtDate(d) {
+function fmtDate(d) { return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`; }
+function fmtDate2(s) {
+  if (!s) return '未知日期';
+  const d = new Date(s);
   return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
 }
-function fmtTime(d) {
-  return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-}
-function fmtNum(n) {
-  return n >= 10000 ? (n/10000).toFixed(1) + 'w' : n.toLocaleString();
-}
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function fmtTime(d) { return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; }
+function fmtNum(n) { return n >= 10000 ? (n/10000).toFixed(1)+'w' : n.toLocaleString(); }
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  setTimeout(() => t.classList.remove('show'), 2600);
 }
 </script>
-
 </body>
 </html>
